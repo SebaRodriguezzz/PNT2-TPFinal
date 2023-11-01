@@ -5,31 +5,50 @@ export const loginStore = defineStore('login', {
         return {
             usuario: {},
             estaLogeado: false,
-            userDB: {username: "admin", password: "1234"}
-
-        
+            esAdmin: false,
+            esUsuario: false,
+            esProfe: false,
+            idLogeado: 1
+            
         }
     },
     actions: {
         async login(usuario) {
             try {
-                // Lo podriamos probar cuando tengamos backend
-                //const datos = await axios.post("http://localhost:3000/login", usuario);
-                console.log("usuario: " + this.usuario.username);
-                console.log("pass: " + usuario.password);
-                //if (datos.status == 200) {
-                if (usuario.username == this.userDB.username && usuario.password == this.userDB.password){
+                const datos = await axios.post("http://localhost:3000/login", usuario);
+                console.log(datos);
+                if (datos.status == 200) {
+                    console.log(datos.request)
                     this.estaLogeado = true;
-                    this.usuario.username = usuario.username;
-                    //localStorage.setItem('usuario', JSON.stringify(
-                    //    { username: usuario.username, token: datos.data.token }))
+                    this.usuario.email = usuario.email;
+                    localStorage.setItem('usuario', JSON.stringify(
+                        { email: usuario.email, token: datos.data.token }))
                 } else {
                     this.estaLogeado = false;
                 }
-                console.log("Log usuario: "+ usuario + " OK")
             } catch (e) {
                 console.log(e);
             }
         },
+        async register(usuario) {
+            console.log("Hola")
+            const datos = await axios.post("http://localhost:3000/register", usuario);
+            console.log(datos.data)
+            return datos;
+        },
+
+
+
+
+        async logOut(usuario) {
+            try {
+               this.estaLogeado = false;
+               this.idLogeado = 0;
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+
     }
 })
