@@ -2,20 +2,18 @@
 // import { RouterLink, RouterView } from 'vue-router'
 import {IonApp, IonRouterOutlet, IonHeader} from '@ionic/vue'
 import { storeToRefs } from "pinia";
-import { useShoppingStore } from "../src/stores/shoppingcart";
 import { loginStore } from './stores/userStore'
 
 export default {
   components: { IonApp, IonRouterOutlet, IonHeader},
   setup() {
-    const store = useShoppingStore();
-    const { addToCar, getProducts, getLenghtProducts } = storeToRefs(store);
+  
 
     const store1 = loginStore();
     const { usuario, estaLogeado } = storeToRefs(store1);
     const { logout } = store1;
 
-    return { addToCar , getProducts, getLenghtProducts, usuario, estaLogeado};
+    return { usuario, estaLogeado};
   },
 
 }
@@ -28,8 +26,6 @@ export default {
       <RouterLink to="/register" v-if="!estaLogeado">Register  |</RouterLink>
       <RouterLink to="/login" v-if="!estaLogeado">Login  |</RouterLink>
       <RouterLink to="/about">About  |</RouterLink>
-      <RouterLink to="/system" v-if="estaLogeado">System  |</RouterLink>
-      <RouterLink to="/shopping">Shopping Cart (Cantidad: {{ getLenghtProducts }})</RouterLink>
       <RouterLink to="/exit" v-if="estaLogeado"> Salir  |</RouterLink>
       user {{this.usuario.email}}
     </ion-header>
