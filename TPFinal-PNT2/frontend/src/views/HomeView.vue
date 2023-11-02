@@ -23,7 +23,7 @@ export default {
 <template>
 
   <ion-page>
-    <ion-content>
+    <ion-content class="ion-padding">
     <h2>Home</h2>
     </ion-content>
 

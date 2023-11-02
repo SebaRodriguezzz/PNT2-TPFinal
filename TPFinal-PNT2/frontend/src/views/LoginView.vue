@@ -32,7 +32,7 @@ export default {
 
 <template>
   <ion-page>
-    <ion-content>
+    <ion-content class="ion-padding">
       <h2>Login</h2>
       <ion-input v-model="user.email" label="email" type="email"></ion-input>
       <ion-input v-model="user.password" label="password" type="password"></ion-input>

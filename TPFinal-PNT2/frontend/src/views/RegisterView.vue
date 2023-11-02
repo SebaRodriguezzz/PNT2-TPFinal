@@ -22,7 +22,7 @@ export default {
         const datos = await this.register(this.user);
         if(datos){
         console.log(datos)
-        this.$router.push("/")
+        this.$router.push("/login")
         }
         else {
         console.log("Intentar de vuelta")
@@ -47,7 +47,7 @@ export default {
 
 <template>
   <ion-page>
-    <ion-content>
+    <ion-content class="ion-padding">
       <h2>Registro </h2>
       <ion-input v-model="user.nombre" label="nombre" type="text"></ion-input>
       <ion-input v-model="user.apellido" label="apellido" type="text"></ion-input>
