@@ -1,15 +1,13 @@
 import express from 'express'
+import RouterUsuarios from './router/usuarios.js'
 import cors from 'cors'
 import jsonwebtoken from 'jsonwebtoken';
 
 const app = express()
 app.use(cors())
 app.use(express.json())
-const port = 3000
-
-app.get('/ping', (req, res) => {
-  res.send('pong')
-})
+app.use(express.urlencoded({extended: true}))
+app.use(express.static('public'))
 
 // base de prueba en memoria
 
@@ -102,6 +100,6 @@ app.put('/lista/:id', (req,res) =>{
     // res.status(404).json({message:'error'})
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+const PORT = 3000
+const server = app.listen(PORT, () => console.log(`Servidor express escuchando en http://localhost:${PORT}`))
+server.on('error', error => console.log(`Error en servidor: ${error.message}`))
