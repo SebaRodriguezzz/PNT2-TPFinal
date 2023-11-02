@@ -25,6 +25,17 @@ export default {
       } else {
         // redirigir a otra pagina
       }
+    },
+    async logout() {
+      console.log(this.user);
+      console.log("Logeado: " + this.estaLogeado)
+
+      this.user = null;
+      this.estaLogeado = !this.estaLogeado
+      if(!this.estaLogeado && user == null) {
+        console.log("Sesion terminada")
+        this.$router.push("/login")
+      }
     }
   }
 }
