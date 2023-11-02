@@ -36,10 +36,15 @@ export const loginStore = defineStore('login', {
             console.log(datos.data)
             return datos;
         },
-        async logOut(usuario) {
+        async logout(usuario) {
             try {
+               console.log("Hola de vuelta logout")
+               console.log(usuario.email)
+               const datos = await axios.post("http://localhost:3000/logout", usuario);
+               console.log(datos.data)
                this.estaLogeado = false;
                this.idLogeado = 0;
+               this.usuario = {};
             } catch (e) {
                 console.log(e);
             }

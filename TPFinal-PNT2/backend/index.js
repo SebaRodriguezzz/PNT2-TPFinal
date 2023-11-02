@@ -26,6 +26,11 @@ const users = [
   {email:'user@test.com',password:'1234','rol':'user'}
 ]
 
+app.post('/logout', (req, res) => {
+  res.status(200).json({ mensaje: bien })
+  })
+
+
 app.post('/register', (req, res) => {
   if (req.body) {
     const user = req.body;

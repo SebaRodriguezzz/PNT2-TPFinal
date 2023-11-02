@@ -8,14 +8,20 @@ import { loginStore } from './stores/userStore'
 export default {
   components: { IonApp, IonRouterOutlet, IonHeader, IonButton },
   setup() {
-  
-
     const store1 = loginStore();
     const { usuario, estaLogeado } = storeToRefs(store1);
     const { logout } = store1;
 
-    return { usuario, estaLogeado};
+    return { usuario, estaLogeado, logout};
   },
+  methods: {
+       logoutForm() {
+        console.log("Holaaa dale si")
+        localStorage.clear();
+        this.$router.push("/login")
+      }
+
+  }
 
 }
 </script>
@@ -29,8 +35,8 @@ export default {
       <RouterLink to="/about" v-if="!estaLogeado">About  |</RouterLink>
       <RouterLink to="/exit" v-if="estaLogeado"> Salir  |</RouterLink>
       user {{this.usuario.email}}
+      <ion-button fill="clear" @click="logoutForm" v-if="estaLogeado">Logout</ion-button>
 
-      <ion-button fill="clear" @click="logout" v-if="estaLogeado">Logout</ion-button>
     </ion-header>
     <ion-router-outlet />
   </ion-app>
