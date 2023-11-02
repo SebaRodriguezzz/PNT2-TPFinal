@@ -21,7 +21,7 @@ export default {
       console.log(this.user.email);
       await this.login(this.user);
       if(this.estaLogeado) {
-        this.$router.push("/system")
+        this.$router.push("/home")
       } else {
         // redirigir a otra pagina
       }
