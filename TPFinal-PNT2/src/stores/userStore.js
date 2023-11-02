@@ -36,10 +36,6 @@ export const loginStore = defineStore('login', {
             console.log(datos.data)
             return datos;
         },
-
-
-
-
         async logOut(usuario) {
             try {
                this.estaLogeado = false;
@@ -47,8 +43,6 @@ export const loginStore = defineStore('login', {
             } catch (e) {
                 console.log(e);
             }
-        },
-
-
+        }
     }
 })
