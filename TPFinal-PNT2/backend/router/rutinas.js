@@ -1,5 +1,5 @@
 import express from 'express'
-import Controlador from '../controlador/usuarios.js'
+import Controlador from '../controlador/rutinas.js'
 
 
 class Router {
@@ -14,8 +14,8 @@ class Router {
 
         this.router.put('/:id', this.controlador.modificarUsuario)
 
+        this.router.post('/register', this.controlador.registrarUsuario)
         this.router.post('/login', this.controlador.logearUsuario)
-
         this.router.post('/', this.controlador.agregarUsuario) //Por parte del admin
     
 

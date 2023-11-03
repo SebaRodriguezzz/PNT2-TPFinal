@@ -1,5 +1,9 @@
 import express from 'express'
+
 import RouterUsuarios from './router/usuarios.js'
+import RouterClases from './router/clases.js'
+import RouterRutinas from './router/rutinas.js'
+
 import cors from 'cors'
 import jsonwebtoken from 'jsonwebtoken';
 
@@ -8,6 +12,12 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
+
+
+app.use('/api/usuarios', new RouterUsuarios().start())
+app.use('/api/clases', new RouterClases().start())
+app.use('/api/rutinas', new RouterRutinas().start())
+
 
 // base de prueba en memoria
 
@@ -23,10 +33,6 @@ const profes = [{email:'profe1@test.com',password:'1234','rol':'profe'}]
 const users = [
   {email:'user@test.com',password:'1234','rol':'user'}
 ]
-
-app.post('/logout', (req, res) => {
-  res.status(200).json({ mensaje: bien })
-  })
 
 
 app.post('/register', (req, res) => {
