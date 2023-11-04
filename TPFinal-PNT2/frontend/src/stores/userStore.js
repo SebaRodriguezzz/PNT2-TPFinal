@@ -43,6 +43,25 @@ export const loginStore = defineStore('login', {
             } catch (e) {
                 console.log(e);
             }
-        }
+        },
+        async agregarUsuario(usuario) {
+            try {
+            console.log("2da parte hecha")
+            const datos = await axios.post("http://localhost:3000/alumnos/agregar", usuario);
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async loadData() {
+            try {
+            const usuarios = await axios.get("http://localhost:3000/alumnos");
+            console.log(usuarios[0])
+            console.log("Se trajo la data")
+            return usuarios;
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
     }
 })

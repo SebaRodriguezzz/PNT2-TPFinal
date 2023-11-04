@@ -15,6 +15,8 @@ export default {
   },
   methods: {
        logoutForm() {
+
+        3 
         this.logout();
         this.$router.push("/login")
       }
@@ -27,7 +29,7 @@ export default {
   <ion-app>
     <ion-header>
       <RouterLink to="/">Home  |</RouterLink>
-      <RouterLink to="/alumnos/agregar" v-if="estaLogeado && esAdmin">Agregar Alumnos Admin  |</RouterLink>
+      <RouterLink to="/alumnos" v-if="estaLogeado && esAdmin">Agregar Alumnos Admin  |</RouterLink>
       <RouterLink to="/alumno/inicio" v-if="estaLogeado && esAlumno">Vista de alumno |</RouterLink>
       <RouterLink to="/profe/inicio" v-if="estaLogeado && esProfe">Vista de profe |</RouterLink>
       <RouterLink to="/login" v-if="!estaLogeado">Login  |</RouterLink>

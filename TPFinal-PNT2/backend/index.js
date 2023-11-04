@@ -18,6 +18,8 @@ app.use(express.static('public'))
 const users = [
   {email:'admin@test.com',password:'1234','rol':'admin'},
   {email:'alumno@test.com',password:'1234','rol':'alumno'},
+  {email:'admin2@test.com',password:'1234','rol':'admin'},
+  {email:'alumno2@test.com',password:'1234','rol':'alumno'},
   {email:'profe@test.com',password:'1234','rol':'profe'}
 ]
 
@@ -57,11 +59,18 @@ app.post('/login',(req,res) =>{
   }
 })
 
-app.post('/alumno/agregar', adminMiddleware, (req,res) =>{
+app.get('/alumnos',(req,res) =>{
+const listaUsuarios = users
+res.send(listaUsuarios)
+}) 
+
+
+app.post('/alumnos/agregar',(req,res) =>{
   console.log(req.body);
   if(req.body) {
     const alumno = req.body;
-    this.users.add(alumno)
+    users.push(alumno)
+    res.status(200).json({message:'bien'})
   } else {
     res.status(400).json({message:'error'})
   }

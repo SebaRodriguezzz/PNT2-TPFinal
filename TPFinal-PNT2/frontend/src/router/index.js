@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from '@ionic/vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import HomeAdmin from '../views/InicioAdminView.vue'
-import AgregarAlumnos from '../views/AgregarAlumnoView.vue'
+import Alumnos from '../views/AlumnosView.vue'
 import HomeAlumno from '../views/HomeAlumnoView.vue'
 import HomeProfe from '../views/HomeProfeView.vue'
 
@@ -41,9 +41,9 @@ const router = createRouter({
     }
     ,
     {
-      path: '/alumnos/agregar',
-      name: 'agregarAlumnos',
-      component: AgregarAlumnos,
+      path: '/alumnos',
+      name: 'alumnos',
+      component: Alumnos,
     }
     ,
     {
@@ -57,12 +57,8 @@ const router = createRouter({
       name: 'inicio profe',
       component: HomeProfe,
     }
-    ,
-    {
-      path: '/alumnos/agregar',
-      name: 'agregarAlumnos',
-      component: AgregarAlumnos,
-    }
+    
+   
   ]
 })
 
