@@ -37,6 +37,7 @@ export default {
       <h2>Login</h2>
       <ion-input v-model="user.email" label="email" type="email"></ion-input>
       <ion-input v-model="user.password" label="password" type="password"></ion-input>
+      <ion-input v-model="user.rol" label="rol" type="text"></ion-input>
       <ion-button @click="loginForm">Login</ion-button>
     </ion-content>
   </ion-page>

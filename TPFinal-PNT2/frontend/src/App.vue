@@ -1,7 +1,6 @@
 <script>
 // import { RouterLink, RouterView } from 'vue-router'
 import {IonApp, IonRouterOutlet, IonHeader, IonButton } from '@ionic/vue'
-import { defineComponent } from 'vue'
 import { storeToRefs } from "pinia";
 import { loginStore } from './stores/userStore'
 
@@ -9,18 +8,16 @@ export default {
   components: { IonApp, IonRouterOutlet, IonHeader, IonButton },
   setup() {
     const store1 = loginStore();
-    const { usuario, estaLogeado } = storeToRefs(store1);
+    const { esAlumno,esProfe,esAdmin,usuario, estaLogeado} = storeToRefs(store1);
     const { logout } = store1;
 
-    return { usuario, estaLogeado, logout};
+    return {esAlumno,esProfe,esAdmin,usuario, estaLogeado, logout};
   },
   methods: {
        logoutForm() {
-        console.log("Holaaa dale si")
-        localStorage.clear();
+        this.logout();
         this.$router.push("/login")
       }
-
   }
 
 }
@@ -30,12 +27,14 @@ export default {
   <ion-app>
     <ion-header>
       <RouterLink to="/">Home  |</RouterLink>
-      <RouterLink to="/register" v-if="!estaLogeado">Register  |</RouterLink>
+      <RouterLink to="/alumnos/agregar" v-if="estaLogeado && esAdmin">Agregar Alumnos Admin  |</RouterLink>
+      <RouterLink to="/alumno/inicio" v-if="estaLogeado && esAlumno">Vista de alumno |</RouterLink>
+      <RouterLink to="/profe/inicio" v-if="estaLogeado && esProfe">Vista de profe |</RouterLink>
       <RouterLink to="/login" v-if="!estaLogeado">Login  |</RouterLink>
-      <RouterLink to="/about" v-if="!estaLogeado">About  |</RouterLink>
-      <RouterLink to="/exit" v-if="estaLogeado"> Salir  |</RouterLink>
-      user {{this.usuario.email}}
+      <RouterLink to="/about" v-if="estaLogeado">About  |</RouterLink>
       <ion-button fill="clear" @click="logoutForm" v-if="estaLogeado">Logout</ion-button>
+      user {{this.usuario.email}}
+     
 
     </ion-header>
     <ion-router-outlet />

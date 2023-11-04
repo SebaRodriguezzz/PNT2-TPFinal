@@ -11,14 +11,9 @@ class Router {
     start() {
       
         this.router.get('/lista/:id?', this.controlador.obtenerUsuarios)
-
         this.router.put('/:id', this.controlador.modificarUsuario)
-
         this.router.post('/login', this.controlador.logearUsuario)
-
         this.router.post('/', this.controlador.agregarUsuario) //Por parte del admin
-    
-
         this.router.delete('/:id', this.controlador.borrarUsuario)
         return this.router
     }

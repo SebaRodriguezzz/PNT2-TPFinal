@@ -1,8 +1,7 @@
 import express from 'express'
 
 import RouterUsuarios from './router/usuarios.js'
-import RouterClases from './router/clases.js'
-import RouterRutinas from './router/rutinas.js'
+
 
 import cors from 'cors'
 import jsonwebtoken from 'jsonwebtoken';
@@ -14,63 +13,42 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
 
-app.use('/api/usuarios', new RouterUsuarios().start())
-app.use('/api/clases', new RouterClases().start())
-app.use('/api/rutinas', new RouterRutinas().start())
-
-
 // base de prueba en memoria
 
-const admin = [{email:'admin@test.com',password:'1234','rol':'admin'}]
-
-const profesHabilitados = [{email:'profeHabilitado@test.com',password:'1234','rol':'user'},
-{email:'profeHabilitado2@test.com',password:'1234','rol':'user'} ]
-
-const usuariosHabilitados = [{email:'habilitado@test.com',password:'1234','rol':'user'},
-{email:'habilitado2@test.com',password:'1234','rol':'user'} ]
-
-const profes = [{email:'profe1@test.com',password:'1234','rol':'profe'}]
 const users = [
-  {email:'user@test.com',password:'1234','rol':'user'}
+  {email:'admin@test.com',password:'1234','rol':'admin'},
+  {email:'alumno@test.com',password:'1234','rol':'alumno'},
+  {email:'profe@test.com',password:'1234','rol':'profe'}
 ]
 
-
-app.post('/register', (req, res) => {
-  if (req.body) {
-    const user = req.body;
-    console.log(user.email)
-    if (usuariosHabilitados.filter(u => u.email == user.email && u.rol == "user").length > 0) {
-      console.log("Esta bien")
-      user.rol = 'user'
-      users.push(user)
-      console.log("Se pusheo")
-      res.status(200).json({ usuario: user })
-      console.log(res.status)
-
-    }
-    else{
-      res.status(403).json({ message: 'error' })
-      console.log("Holaaa back")
-      
-    }
-
-  } else {
-    res.status(400).json({ message: 'error' })
-    console.log(res.status)
+const adminMiddleware =(req,res,next)=>{
+  const user = user.filter(u => req.body.user.email == u.email)
+  if(user.rol == 'admin') {
+  next()
   }
-})
+  res.status(400).json({status: 400, message:'Este usuario no tiene priv de admin'})
+  
+  }
+
+  const AuthMiddleware = async (req,res,next) => {
+  const accessToken = req.header('Authorization');
+  
+    if (!accessToken || !accessToken.startsWith('Bearer ')) {
+      return res.status(588).json({error : 'hola'});
+    }
+  
+    next();
+  };
+
 
 app.post('/login',(req,res) =>{
   console.log(req.body);
   if(req.body) {
     const user = req.body;
-    //console.log(user);
     const userDb = users.find(u=>u.email==user.email&&u.password==user.password)
-    //console.log(userId);
     if(userDb) {
-      const token =
-        jsonwebtoken.sign({email:user.email,rol:'adm'},'clave_secreta')
-        res.json({token:token})
+      const token = jsonwebtoken.sign({email:userDb.email,rol: userDb.rol},'clave_secreta')
+      res.json({token:token})
     } else {
       res.status(401).json({message:'error'})
     }
@@ -78,6 +56,18 @@ app.post('/login',(req,res) =>{
     res.status(400).json({message:'error'})
   }
 })
+
+app.post('/alumno/agregar', adminMiddleware, (req,res) =>{
+  console.log(req.body);
+  if(req.body) {
+    const alumno = req.body;
+    this.users.add(alumno)
+  } else {
+    res.status(400).json({message:'error'})
+  }
+})
+
+
 
 const lista = [{id:100,name:'Charly'},{id:200,name:'Jhon'}]
 app.get('/lista', (req, res) => {

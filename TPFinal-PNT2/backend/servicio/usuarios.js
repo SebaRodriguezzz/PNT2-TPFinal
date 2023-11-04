@@ -1,7 +1,6 @@
 //import ModelMem from '../model/DAO/productosMem.js'
 //import ModelFile from '../model/DAO/productosFile.js'
-import config from "../config.js"
-import ModelFactory from "../model/DAO/usuariosFactory.js"
+
 
 class Servicio {
     constructor() {
