@@ -47,7 +47,7 @@ export default {
 
     <ion-content class="ion-padding">
 
-      {{ lista[0] }}
+      
       <div class="container">
       <div class="login-text">Agregar usuario </div>
         <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email"></ion-input>
@@ -55,9 +55,13 @@ export default {
         <ion-input class="input" v-model="user.rol" placeholder="Rol (admin - user)" type="text"></ion-input>
         <ion-button @click="addUser">Agregar</ion-button>
       </div>
+      <br>
+      <div class="login-text">Usuarios agregados</div>
+      {{ lista[0] }}
     </ion-content>
   </ion-page>
 </template>
+
 
 <style>
 .login-text{
