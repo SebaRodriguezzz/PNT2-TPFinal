@@ -35,7 +35,7 @@ export default {
   <ion-page>
     <ion-content class="ion-padding">
       <div class="container">
-        <h1 class="login-text">Login</h1>
+        <div class="login-text">Login</div>
         <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email"></ion-input>
         <ion-input class="input" v-model="user.password" placeholder="Password" type="password"></ion-input>
         <ion-button @click="loginForm">Login</ion-button>
@@ -49,7 +49,7 @@ export default {
 .login-text{
   font-weight: bold;
   color: rgb(78, 78, 78);
-
+  font-size: 32px;
 }
 
 .container {
