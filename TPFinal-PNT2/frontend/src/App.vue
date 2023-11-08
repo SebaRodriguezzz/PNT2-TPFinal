@@ -27,21 +27,64 @@ export default {
 
 <template>
   <ion-app>
-    <ion-header>
-      <RouterLink to="/">Home  |</RouterLink>
-      <RouterLink to="/alumnos" v-if="estaLogeado && esAdmin">Agregar Alumnos Admin  |</RouterLink>
-      <RouterLink to="/alumno/inicio" v-if="estaLogeado && esAlumno">Vista de alumno |</RouterLink>
-      <RouterLink to="/profe/inicio" v-if="estaLogeado && esProfe">Vista de profe |</RouterLink>
-      <RouterLink to="/login" v-if="!estaLogeado">Login  |</RouterLink>
-      <RouterLink to="/about" v-if="estaLogeado">About  |</RouterLink>
-      <ion-button fill="clear" @click="logoutForm" v-if="estaLogeado">Logout</ion-button>
-      user {{this.usuario.email}}
-     
-
+    <ion-header class="header-container">
+      <div class="button-container">
+        <RouterLink class="custom-button" to="/">Home</RouterLink>
+        <RouterLink class="custom-button" to="/alumnos" v-if="estaLogeado && esAdmin">Agregar Alumnos Admin</RouterLink>
+        <RouterLink class="custom-button" to="/alumno/inicio" v-if="estaLogeado && esAlumno">Vista de alumno</RouterLink>
+        <RouterLink class="custom-button" to="/profe/inicio" v-if="estaLogeado && esProfe">Vista de profe</RouterLink>
+        <RouterLink class="custom-button" to="/login" v-if="!estaLogeado">Login</RouterLink>
+        <RouterLink class="custom-button" to="/about" v-if="estaLogeado">About</RouterLink>
+      </div>
+      <div class="user-info">User: {{ this.usuario.email }}</div>
+      <ion-button class="custom-logout" fill="clear" @click="logoutForm" v-if="estaLogeado">Logout</ion-button>
+      
     </ion-header>
     <ion-router-outlet />
   </ion-app>
 </template>
 
 <style scoped>
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos a los lados */
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+.custom-button {
+  background-color: #007BFF;
+  color: #fff;
+  margin: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.3s; /* Transición de color y tamaño al hacer hover */
+}
+
+.custom-button:hover {
+  background-color: #00b30f;
+  transform: scale(1.1); /* Aumenta el tamaño del botón en un 10% al hacer hover */
+}
+
+.custom-logout {
+  background-color: #DC3545;
+  color: #fff;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.user-info {
+  padding: 5px;
+}
+
 </style>
