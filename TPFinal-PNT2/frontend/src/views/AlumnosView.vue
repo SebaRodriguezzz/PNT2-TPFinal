@@ -52,7 +52,10 @@ export default {
       <div class="login-text">Agregar usuario </div>
         <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email"></ion-input>
         <ion-input class="input" v-model="user.password" placeholder="Password" type="password"></ion-input>
-        <ion-input class="input" v-model="user.rol" placeholder="Rol (admin - user)" type="text"></ion-input>
+        <ion-select class="custom-select" v-model="user.rol" placeholder="Rol">
+          <ion-select-option value="profe">Profe</ion-select-option>
+          <ion-select-option value="alumno">Alumno</ion-select-option>
+        </ion-select>
         <ion-button @click="addUser">Agregar</ion-button>
       </div>
       <br>
@@ -99,6 +102,24 @@ export default {
 
 .native-input.sc-ion-input-md {
   padding-left: 8px;
+}
+
+.custom-select {
+  border: 2px solid rgb(199, 199, 199);
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.custom-select::part(icon) {
+  display: none; /* Oculta el icono del desplegable */
+}
+
+.custom-select:hover {
+  background-color: rgb(247, 247, 247);
+}
+
+.custom-select {
+  --placeholder-color: rgb(199, 199, 199);
 }
 
 </style>
