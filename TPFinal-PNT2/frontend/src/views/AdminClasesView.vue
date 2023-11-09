@@ -13,8 +13,10 @@ export default {
   },
   data() {
     return {
-      clase: {},
-      lista:[]
+      user: {rol : "alumno"},
+      lista:[],
+      mostrarFormularioFlag: false // Inicialmente oculto
+
     }
   },
   mounted() {
@@ -37,6 +39,9 @@ export default {
       this.$router.push("/")
 
     },
+    mostrarFormulario() {
+      this.mostrarFormularioFlag = !this.mostrarFormularioFlag; // Mostrar el formulario al hacer clic
+    }
 
   }
 }
@@ -44,16 +49,18 @@ export default {
 
 <template>
   <ion-page>
-
     <ion-content class="ion-padding">
-
-
-      <h2>Clases</h2>
+      <h2>Alumnos</h2>
+      <!-- Botón para abrir el formulario -->
+      <ion-button @click="mostrarFormulario">Agregar Usuario</ion-button>
+      <!-- Lista de usuarios -->
       <ion-list v-for="e in lista" :key="e.id">
         {{ e.email }} {{ e.password }}
         <ion-button @click="deleteData(e.id)">Eliminar</ion-button>
         <ion-button @click="putData(e.id)">Modificar</ion-button>
       </ion-list>
+      <!-- Formulario flotante -->
+      
       <div class="container">
         <div class="login-text">Agregar clase </div>
         <ion-input class="input" v-model="clase.nombre" placeholder="nombre" type="text"></ion-input>
@@ -62,7 +69,6 @@ export default {
         <ion-input class="input" v-model="clase.limitePersonas" placeholder="E-mail" type="email"></ion-input>
         <ion-button @click="addUser">Agregar</ion-button>
       </div>
-
     </ion-content>
   </ion-page>
 </template>
@@ -123,4 +129,29 @@ export default {
   --placeholder-color: rgb(199, 199, 199);
 }
 
+.floating-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: transparent; /* Fondo transparente */
+  padding: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.25); /* Borde del formulario */
+  border-radius: 12px; /* Mayor radio para la figura circular */
+  box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.25);
+  z-index: 1; /* Para que aparezca por encima del contenido */
+}
+
 </style>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,6 +7,7 @@ import HomeAlumno from '../views/HomeAlumnoView.vue'
 import HomeProfe from '../views/HomeProfeView.vue'
 import AdminProfe from '../views/AdminProfesoresView.vue'
 import AdminClases from '../views/AdminClasesView.vue'
+import VistaRutinas from '../views/RutinasView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -70,6 +71,12 @@ const router = createRouter({
       path: '/admin/clases',
       name: 'admin clases',
       component: AdminClases,
+    }
+    ,
+    {
+      path: '/rutinas',
+      name: 'vista rutinas',
+      component: VistaRutinas,
     }
     
    
