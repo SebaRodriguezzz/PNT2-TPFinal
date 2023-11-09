@@ -31,9 +31,9 @@ export default {
       <div class="button-container">
         <RouterLink class="custom-button" to="/">Home</RouterLink>
         <RouterLink class="custom-button" to="/alumnos" v-if="estaLogeado && esAdmin">Alumnos</RouterLink>
-        <RouterLink class="custom-button" to="/profesores" v-if="estaLogeado && esAdmin">Profesores</RouterLink>
-        <RouterLink class="custom-button" to="/profesores" v-if="estaLogeado && esAdmin">Clases</RouterLink>
-        <RouterLink class="custom-button" to="/profesores" v-if="estaLogeado && esAdmin">Rutinas</RouterLink>
+        <RouterLink class="custom-button" to="/admin/profesores" v-if="estaLogeado && esAdmin">Profesores</RouterLink>
+        <RouterLink class="custom-button" to="/admin/clases" v-if="estaLogeado && esAdmin">Clases</RouterLink>
+        <RouterLink class="custom-button" to="/admin/rutinas" v-if="estaLogeado && esAdmin">Rutinas</RouterLink>
         <RouterLink class="custom-button" to="/alumno/inicio" v-if="estaLogeado && esAlumno">Vista de alumno</RouterLink>
         <RouterLink class="custom-button" to="/profe/inicio" v-if="estaLogeado && esProfe">Rutinas</RouterLink>
         <RouterLink class="custom-button" to="/profe/alumnos" v-if="estaLogeado && esProfe">Alumnos a cargo</RouterLink>

@@ -5,6 +5,8 @@ import HomeAdmin from '../views/InicioAdminView.vue'
 import Alumnos from '../views/AlumnosView.vue'
 import HomeAlumno from '../views/HomeAlumnoView.vue'
 import HomeProfe from '../views/HomeProfeView.vue'
+import AdminProfe from '../views/AdminProfesoresView.vue'
+import AdminClases from '../views/AdminClasesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +58,18 @@ const router = createRouter({
       path: '/profe/inicio',
       name: 'inicio profe',
       component: HomeProfe,
+    }
+    ,
+    {
+      path: '/admin/profesores',
+      name: 'admin profe',
+      component: AdminProfe,
+    }
+    ,
+    {
+      path: '/admin/clases',
+      name: 'admin clases',
+      component: AdminClases,
     }
     
    
