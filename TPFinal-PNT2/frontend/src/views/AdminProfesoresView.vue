@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      user: {rol : "alumno"},
+      user: {rol : "profe"},
       lista:[],
       mostrarFormularioFlag: false // Inicialmente oculto
 
@@ -62,28 +62,18 @@ export default {
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">
         <div >
-          <div class="login-text">Agregar alumno</div>
+          <div class="login-text">Agregar profesor</div>
           <ion-input class="input" v-model="user.nombre" placeholder="nombre" type="text"></ion-input>
           <ion-input class="input" v-model="user.apellido" placeholder="apellido" type="text"></ion-input>
           <ion-input class="input" v-model="user.dni" placeholder="dni" type="text"></ion-input>
           <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email"></ion-input>
-          <ion-input class="input" v-model="user.inicio" placeholder="Inicio" type="date"></ion-input>
           <ion-input class="input" v-model="user.password" placeholder="Password" type="password"></ion-input>
-          <ion-select class="custom-select" v-model="user.plan" placeholder="plan">
-            <ion-select-option value="Basico">Basico</ion-select-option>
-            <ion-select-option value="Platino">Platino</ion-select-option>
-            <ion-select-option value="Oro">Oro</ion-select-option>
-          </ion-select>
           <ion-button @click="addUser">Agregar</ion-button>
         </div>
       </div>
-      <br>
-      <div class="login-text">Usuarios agregados</div>
-      {{ lista[0] }}
     </ion-content>
   </ion-page>
 </template>
-
 
 <style>
 .login-text{

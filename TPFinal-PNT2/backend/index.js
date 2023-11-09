@@ -61,9 +61,8 @@ app.post('/login',(req,res) =>{
 
 app.get('/alumnos',(req,res) =>{
 const listaUsuarios = users
-res.send(listaUsuarios)
+res.json(listaUsuarios)
 }) 
-
 
 app.post('/alumnos/agregar',(req,res) =>{
   console.log(req.body);
@@ -75,8 +74,6 @@ app.post('/alumnos/agregar',(req,res) =>{
     res.status(400).json({message:'error'})
   }
 })
-
-
 
 const lista = [{id:100,name:'Charly'},{id:200,name:'Jhon'}]
 app.get('/lista', (req, res) => {

@@ -13,10 +13,8 @@ export default {
   },
   data() {
     return {
-      user: {rol : "alumno"},
-      lista:[],
-      mostrarFormularioFlag: false // Inicialmente oculto
-
+      rutina: {},
+      lista:[]
     }
   },
   mounted() {
@@ -39,9 +37,6 @@ export default {
       this.$router.push("/")
 
     },
-    mostrarFormulario() {
-      this.mostrarFormularioFlag = !this.mostrarFormularioFlag; // Mostrar el formulario al hacer clic
-    }
 
   }
 }
@@ -49,41 +44,28 @@ export default {
 
 <template>
   <ion-page>
+
     <ion-content class="ion-padding">
-      <h2>Alumnos</h2>
-      <!-- Botón para abrir el formulario -->
-      <ion-button @click="mostrarFormulario">Agregar Usuario</ion-button>
-      <!-- Lista de usuarios -->
+
+
+      <h2>Clases</h2>
       <ion-list v-for="e in lista" :key="e.id">
         {{ e.email }} {{ e.password }}
         <ion-button @click="deleteData(e.id)">Eliminar</ion-button>
         <ion-button @click="putData(e.id)">Modificar</ion-button>
       </ion-list>
-      <!-- Formulario flotante -->
-      <div class="floating-form" v-if="mostrarFormularioFlag">
-        <div >
-          <div class="login-text">Agregar alumno</div>
-          <ion-input class="input" v-model="user.nombre" placeholder="nombre" type="text"></ion-input>
-          <ion-input class="input" v-model="user.apellido" placeholder="apellido" type="text"></ion-input>
-          <ion-input class="input" v-model="user.dni" placeholder="dni" type="text"></ion-input>
-          <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email"></ion-input>
-          <ion-input class="input" v-model="user.inicio" placeholder="Inicio" type="date"></ion-input>
-          <ion-input class="input" v-model="user.password" placeholder="Password" type="password"></ion-input>
-          <ion-select class="custom-select" v-model="user.plan" placeholder="plan">
-            <ion-select-option value="Basico">Basico</ion-select-option>
-            <ion-select-option value="Platino">Platino</ion-select-option>
-            <ion-select-option value="Oro">Oro</ion-select-option>
-          </ion-select>
-          <ion-button @click="addUser">Agregar</ion-button>
-        </div>
+      <div class="container">
+        <div class="login-text">Agregar rutina </div>
+        <ion-input class="input" v-model="clase.nombre" placeholder="nombre" type="text"></ion-input>
+        <ion-input class="input" v-model="clase.profesor" placeholder="apellido" type="text"></ion-input>
+        <ion-input class="input" v-model="clase.horario" placeholder="dni" type="text"></ion-input>
+        <ion-input class="input" v-model="clase.limitePersonas" placeholder="E-mail" type="email"></ion-input>
+        <ion-button @click="addUser">Agregar</ion-button>
       </div>
-      <br>
-      <div class="login-text">Usuarios agregados</div>
-      {{ lista[0] }}
+
     </ion-content>
   </ion-page>
 </template>
-
 
 <style>
 .login-text{
@@ -139,19 +121,6 @@ export default {
 
 .custom-select {
   --placeholder-color: rgb(199, 199, 199);
-}
-
-.floating-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: transparent; /* Fondo transparente */
-  padding: 20px;
-  border: 2px solid rgba(0, 0, 0, 0.25); /* Borde del formulario */
-  border-radius: 12px; /* Mayor radio para la figura circular */
-  box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.25);
-  z-index: 1; /* Para que aparezca por encima del contenido */
 }
 
 </style>
