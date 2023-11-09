@@ -52,12 +52,10 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
-        async loadData() {
+        async cargarDatos() {
             try {
-            const usuarios = await axios.get("http://localhost:3000/alumnos");
-            console.log(usuarios[0])
-            console.log("Se trajo la data")
-            return usuarios;
+            const response = await axios.get("http://localhost:3000/alumnos");
+            return response.data;
             } catch (e) {
                 console.log(e);
             }

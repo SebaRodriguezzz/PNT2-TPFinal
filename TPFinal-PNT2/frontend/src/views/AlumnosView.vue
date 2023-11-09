@@ -8,8 +8,8 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const { loadData,agregarUsuario } = store;
-    return { loadData,agregarUsuario, estaLogeado };
+    const { cargarDatos,agregarUsuario } = store;
+    return { cargarDatos,agregarUsuario, estaLogeado };
   },
   data() {
     return {
@@ -23,7 +23,7 @@ export default {
   methods: {
     async loadData() {
       try {
-        this.lista = await this.loadData()
+        this.lista = await this.cargarDatos()
       } catch(e) {
         console.log(e);
         this.errorMessage = "Se produjo un error"
@@ -33,6 +33,7 @@ export default {
       console.log("Hasta aca perfecto")
       await this.agregarUsuario(this.user);
       alert("Se agrego correctamente")
+      await loadData()
       this.$router.push("/")
 
     },
@@ -48,7 +49,12 @@ export default {
     <ion-content class="ion-padding">
 
       <h2>Usuarios</h2>
-      {{ lista[0] }}
+        <ion-list v-for="e in lista" :key="e.id">
+              {{ e.email }} {{ e.password }}
+              <ion-button @click="deleteData(e.id)">Eliminar</ion-button>
+              <ion-button @click="putData(e.id)">Modificar</ion-button>
+          </ion-list>
+
       <h2>Agregar usuario </h2>
       <ion-input v-model="user.email" label="email" type="email"></ion-input>
       <ion-input v-model="user.password" label="password" type="password"></ion-input>
