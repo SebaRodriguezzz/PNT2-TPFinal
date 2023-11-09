@@ -44,10 +44,8 @@ export default {
 <template>
 
   <ion-page>
-
     <ion-content class="ion-padding">
 
-      
       <div class="container">
       <div class="login-text">Agregar usuario </div>
         <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email"></ion-input>

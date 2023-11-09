@@ -28,14 +28,18 @@ export default {
 <template>
   <ion-app>
     <ion-header class="header-container">
-      <div class="button-container">
-        <RouterLink class="custom-button" to="/">Home</RouterLink>
-        <RouterLink class="custom-button" to="/alumnos" v-if="estaLogeado && esAdmin">Agregar Alumnos Admin</RouterLink>
-        <RouterLink class="custom-button" to="/alumno/inicio" v-if="estaLogeado && esAlumno">Vista de alumno</RouterLink>
-        <RouterLink class="custom-button" to="/profe/inicio" v-if="estaLogeado && esProfe">Vista de profe</RouterLink>
-        <RouterLink class="custom-button" to="/login" v-if="!estaLogeado">Login</RouterLink>
-        <RouterLink class="custom-button" to="/about" v-if="estaLogeado">About</RouterLink>
-      </div>
+      <div class="box">
+
+
+        <div class="button-container">
+          <RouterLink class="custom-button" to="/">Home</RouterLink>
+          <RouterLink class="custom-button" to="/alumnos" v-if="estaLogeado && esAdmin">Agregar Alumnos Admin</RouterLink>
+          <RouterLink class="custom-button" to="/alumno/inicio" v-if="estaLogeado && esAlumno">Vista de alumno</RouterLink>
+          <RouterLink class="custom-button" to="/profe/inicio" v-if="estaLogeado && esProfe">Vista de profe</RouterLink>
+          <RouterLink class="custom-button" to="/login" v-if="!estaLogeado">Login</RouterLink>
+          <RouterLink class="custom-button" to="/about" v-if="estaLogeado">About</RouterLink>
+        </div>
+    </div>
       <div class="user-info">User: {{ this.usuario.email }}</div>
       <ion-button class="custom-logout" fill="clear" @click="logoutForm" v-if="estaLogeado">Logout</ion-button>
       
@@ -45,6 +49,8 @@ export default {
 </template>
 
 <style scoped>
+
+
 .header-container {
   display: flex;
   justify-content: space-between; /* Distribuye los elementos a los lados */

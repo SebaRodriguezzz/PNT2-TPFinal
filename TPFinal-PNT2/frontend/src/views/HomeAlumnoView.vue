@@ -24,9 +24,18 @@ export default {
 
   <ion-page>
     <ion-content class="ion-padding">
-    <h2> Vista de alumno </h2>
+      <div class="box">
+        <h2> Vista de alumno </h2>
+        <h2> Vista de alumno </h2>
+        <h2> Vista de alumno </h2>
+      </div>
+    
     </ion-content>
 
   </ion-page>
 
 </template>
+
+<style scoped>
+
+</style>
