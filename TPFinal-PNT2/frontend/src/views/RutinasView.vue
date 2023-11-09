@@ -56,10 +56,10 @@ export default {
       </ion-list>
       <div class="container">
         <div class="login-text">Agregar rutina </div>
-        <ion-input class="input" v-model="clase.nombre" placeholder="nombre" type="text"></ion-input>
-        <ion-input class="input" v-model="clase.profesor" placeholder="apellido" type="text"></ion-input>
-        <ion-input class="input" v-model="clase.horario" placeholder="dni" type="text"></ion-input>
-        <ion-input class="input" v-model="clase.limitePersonas" placeholder="E-mail" type="email"></ion-input>
+        <ion-input class="input" v-model="rutina.nombre" placeholder="nombre" type="text"></ion-input>
+        <ion-input class="input" v-model="rutina.profesor" placeholder="ID profesor" type="text"></ion-input>
+        <ion-input class="input" v-model="rutina.nivel" placeholder="dni" type="text"></ion-input>
+        <ion-input class="input" v-model="rutina.dias" placeholder="E-mail" type="email"></ion-input>
         <ion-button @click="addUser">Agregar</ion-button>
       </div>
 

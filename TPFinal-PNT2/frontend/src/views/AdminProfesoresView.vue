@@ -50,9 +50,9 @@ export default {
 <template>
   <ion-page>
     <ion-content class="ion-padding">
-      <h2>Alumnos</h2>
+      <h2>Profesores</h2>
       <!-- Botón para abrir el formulario -->
-      <ion-button @click="mostrarFormulario">Agregar Usuario</ion-button>
+      <ion-button @click="mostrarFormulario">Agregar Profe</ion-button>
       <!-- Lista de usuarios -->
       <ion-list v-for="e in lista" :key="e.id">
         {{ e.email }} {{ e.password }}

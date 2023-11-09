@@ -25,6 +25,7 @@ export const loginStore = defineStore('login', {
                     this.esAlumno = decryptedToken.rol == 'alumno';
                     this.estaLogeado = true;
                     this.usuario.email = usuario.email;
+                    this.usuario.password = usuario.password;
                     localStorage.setItem('usuario', JSON.stringify(
                         { email: usuario.email, token: datos.data.token }))
                 } else {
