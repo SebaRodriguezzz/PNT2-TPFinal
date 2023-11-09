@@ -61,21 +61,20 @@ export default {
       </ion-list>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">
-        <div >
+        <button @click="mostrarFormulario" class="close-button">X</button>
           <div class="login-text">Agregar alumno</div>
-          <ion-input class="input" v-model="user.nombre" placeholder="nombre" type="text"></ion-input>
-          <ion-input class="input" v-model="user.apellido" placeholder="apellido" type="text"></ion-input>
-          <ion-input class="input" v-model="user.dni" placeholder="dni" type="text"></ion-input>
+          <ion-input class="input" v-model="user.nombre" placeholder="Nombre" type="text"></ion-input>
+          <ion-input class="input" v-model="user.apellido" placeholder="Apellido" type="text"></ion-input>
+          <ion-input class="input" v-model="user.dni" placeholder="DNI" type="text"></ion-input>
           <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email"></ion-input>
           <ion-input class="input" v-model="user.inicio" placeholder="Inicio" type="date"></ion-input>
-          <ion-input class="input" v-model="user.password" placeholder="Password" type="password"></ion-input>
-          <ion-select class="custom-select" v-model="user.plan" placeholder="plan">
+          <ion-input class="input" v-model="user.password" placeholder="Contraseña" type="password"></ion-input>
+          <ion-select class="input custom-select" v-model="user.plan" placeholder="Seleccionar plan">
             <ion-select-option value="Basico">Basico</ion-select-option>
             <ion-select-option value="Platino">Platino</ion-select-option>
             <ion-select-option value="Oro">Oro</ion-select-option>
           </ion-select>
           <ion-button @click="addUser">Agregar</ion-button>
-        </div>
       </div>
       <br>
       <div class="login-text">Usuarios agregados</div>
@@ -86,6 +85,37 @@ export default {
 
 
 <style>
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 11px;
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(78, 78, 78);
+  background-color: transparent;
+  border: none;
+}	
+
+.floating-form {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 520px;
+  gap: 11px;
+  transform: translate(-50%, -50%);
+  background-color: transparent; /* Fondo transparente */
+  padding: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.25); /* Borde del formulario */
+  border-radius: 12px; /* Mayor radio para la figura circular */
+  box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.25);
+  z-index: 1; /* Para que aparezca por encima del contenido */
+}
+
 .login-text{
   font-weight: bold;
   color: rgb(78, 78, 78);
@@ -127,6 +157,7 @@ export default {
   border: 2px solid rgb(199, 199, 199);
   border-radius: 8px;
   transition: 0.3s;
+  padding-left: 8px;
 }
 
 .custom-select::part(icon) {
@@ -139,19 +170,6 @@ export default {
 
 .custom-select {
   --placeholder-color: rgb(199, 199, 199);
-}
-
-.floating-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: transparent; /* Fondo transparente */
-  padding: 20px;
-  border: 2px solid rgba(0, 0, 0, 0.25); /* Borde del formulario */
-  border-radius: 12px; /* Mayor radio para la figura circular */
-  box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.25);
-  z-index: 1; /* Para que aparezca por encima del contenido */
 }
 
 </style>
