@@ -15,8 +15,8 @@ export default {
     return {
       user: {rol : "alumno"},
       lista:[],
-      mostrarFormularioFlag: false // Inicialmente oculto
-
+      mostrarFormularioFlag: false, // Inicialmente oculto
+      showPassword: false
     }
   },
   mounted() {
@@ -41,6 +41,9 @@ export default {
     },
     mostrarFormulario() {
       this.mostrarFormularioFlag = !this.mostrarFormularioFlag; // Mostrar el formulario al hacer clic
+    },
+    mostrarContraseña(item) {
+      item.showPassword = !item.showPassword;
     }
 
   }
@@ -51,34 +54,43 @@ export default {
   <ion-page>
     <ion-content class="ion-padding">
       <h2>Alumnos</h2>
-      <!-- Botón para abrir el formulario -->
-      <ion-button @click="mostrarFormulario">Agregar Usuario</ion-button>
-      <!-- Lista de usuarios -->
-      <ion-list v-for="e in lista" :key="e.id">
-        {{ e.email }} {{ e.password }}
-        <ion-button @click="deleteData(e.id)">Eliminar</ion-button>
-        <ion-button @click="putData(e.id)">Modificar</ion-button>
-      </ion-list>
+      <br>
+      <br>
+      <ion-content>
+        <!-- Lista de usuarios -->
+        <div class="login-text">Usuarios agregados</div><br>
+        <!-- Botón para abrir el formulario -->
+        <ion-button @click="mostrarFormulario">Agregar Usuario</ion-button><br><br>
+
+        <ion-item v-for="e in lista" :key="e.id">
+          <ion-label>Email: {{ e.email }}</ion-label>
+          <ion-label>
+            Password:
+            <span v-if="!e.showPassword">********</span>
+            <span v-else>{{ e.password }}</span>
+          </ion-label>
+          <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>
+        </ion-item>
+      </ion-content>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">
         <button @click="mostrarFormulario" class="close-button">X</button>
-          <div class="login-text">Agregar alumno</div>
-          <ion-input class="input" v-model="user.nombre" placeholder="Nombre" type="text"></ion-input>
-          <ion-input class="input" v-model="user.apellido" placeholder="Apellido" type="text"></ion-input>
-          <ion-input class="input" v-model="user.dni" placeholder="DNI" type="text"></ion-input>
-          <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email"></ion-input>
-          <ion-input class="input" v-model="user.inicio" placeholder="Inicio" type="date"></ion-input>
-          <ion-input class="input" v-model="user.password" placeholder="Contraseña" type="password"></ion-input>
-          <ion-select class="input custom-select" v-model="user.plan" placeholder="Seleccionar plan">
-            <ion-select-option value="Basico">Basico</ion-select-option>
-            <ion-select-option value="Platino">Platino</ion-select-option>
-            <ion-select-option value="Oro">Oro</ion-select-option>
-          </ion-select>
-          <ion-button @click="addUser">Agregar</ion-button>
+        <div class="login-text">Agregar alumno</div>
+        <ion-input class="input" v-model="user.nombre" placeholder="Nombre" type="text" required></ion-input>
+        <ion-input class="input" v-model="user.apellido" placeholder="Apellido" type="text" required></ion-input>
+        <ion-input class="input" v-model="user.dni" placeholder="DNI" type="text" required></ion-input>
+        <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email" required></ion-input>
+        <ion-input class="input" v-model="user.password" placeholder="Contraseña" type="password" required></ion-input>
+        <ion-input class="input" v-model="user.inicio" placeholder="Inicio" type="date" required></ion-input>
+        <ion-select class="input custom-select" v-model="user.plan" placeholder="Seleccionar plan" required>
+          <ion-select-option value="Basico">Basico</ion-select-option>
+          <ion-select-option value="Platino">Platino</ion-select-option>
+          <ion-select-option value="Oro">Oro</ion-select-option>
+        </ion-select>
+        <ion-button @click="addUser">Agregar</ion-button>
       </div>
       <br>
-      <div class="login-text">Usuarios agregados</div>
-      {{ lista[0] }}
+
     </ion-content>
   </ion-page>
 </template>
@@ -108,7 +120,7 @@ export default {
   height: 520px;
   gap: 11px;
   transform: translate(-50%, -50%);
-  background-color: transparent; /* Fondo transparente */
+  background-color: white; /* Fondo transparente */
   padding: 20px;
   border: 2px solid rgba(0, 0, 0, 0.25); /* Borde del formulario */
   border-radius: 12px; /* Mayor radio para la figura circular */
@@ -170,6 +182,20 @@ export default {
 
 .custom-select {
   --placeholder-color: rgb(199, 199, 199);
+}
+
+
+.user-list ion-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.user-list ion-label {
+  font-weight: bold;
+}
+
+.user-list ion-button {
+  margin-left: 10px;
 }
 
 </style>

@@ -130,18 +130,22 @@ export default {
 }
 
 .floating-form {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 400px;
+  height: 520px;
+  gap: 11px;
   transform: translate(-50%, -50%);
-  background-color: transparent; /* Fondo transparente */
+  background-color: white; /* Fondo transparente */
   padding: 20px;
   border: 2px solid rgba(0, 0, 0, 0.25); /* Borde del formulario */
   border-radius: 12px; /* Mayor radio para la figura circular */
   box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.25);
   z-index: 1; /* Para que aparezca por encima del contenido */
 }
-
 </style>
 
 
