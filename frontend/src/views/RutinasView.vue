@@ -14,7 +14,9 @@ export default {
   data() {
     return {
       rutina: {},
-      lista:[]
+      lista:[],
+      mostrarFormularioFlag: false, // Inicialmente oculto
+      showPassword: false
     }
   },
   mounted() {
@@ -37,6 +39,12 @@ export default {
       this.$router.push("/")
 
     },
+    mostrarFormulario() {
+      this.mostrarFormularioFlag = !this.mostrarFormularioFlag; // Mostrar el formulario al hacer clic
+    },
+    mostrarContraseña(item) {
+      item.showPassword = !item.showPassword;
+    }
 
   }
 }
@@ -44,30 +52,88 @@ export default {
 
 <template>
   <ion-page>
-
     <ion-content class="ion-padding">
+      <h2>Rutinas</h2>
+      <br>
+      <br>
+      <!-- Lista de usuarios -->
+      <div class="login-text">Rutinas</div><br>
+      <!-- Botón para abrir el formulario -->
+      <ion-button @click="mostrarFormulario">Agregar Rutina</ion-button><br><br>
 
-
-      <h2>Clases</h2>
-      <ion-list v-for="e in lista" :key="e.id">
-        {{ e.email }} {{ e.password }}
+      <ion-item v-for="e in lista" :key="e.id">
+        <ion-label>Email: {{ e.email }}</ion-label>
+        <ion-label>
+          Password:
+          <span v-if="!e.showPassword">********</span>
+          <span v-else>{{ e.password }}</span>
+        </ion-label>
         <ion-button @click="deleteData(e.id)">Eliminar</ion-button>
         <ion-button @click="putData(e.id)">Modificar</ion-button>
-      </ion-list>
-      <div class="container">
+      </ion-item>
+      <!-- Formulario flotante -->
+
+
+
+
+
+      
+
+
+      <!-- No esta funcionando el mostrar formulario-->
+
+
+
+
+
+      <div class="floating-form" v-if="mostrarFormularioFlag">
+        <button @click="mostrarFormulario" class="close-button">X</button>
         <div class="login-text">Agregar rutina </div>
-        <ion-input class="input" v-model="rutina.nombre" placeholder="nombre" type="text"></ion-input>
-        <ion-input class="input" v-model="rutina.profesor" placeholder="ID profesor" type="text"></ion-input>
-        <ion-input class="input" v-model="rutina.nivel" placeholder="dni" type="text"></ion-input>
-        <ion-input class="input" v-model="rutina.dias" placeholder="E-mail" type="email"></ion-input>
+        <ion-input class="input" v-model="rutina.nombre" placeholder="Nombre" type="text" required></ion-input>
+        <ion-input class="input" v-model="rutina.profesor" placeholder="ID profesor" type="text" required></ion-input>
+        <ion-input class="input" v-model="rutina.nivel" placeholder="DNI" type="text" required></ion-input>
+        <ion-input class="input" v-model="rutina.dias" placeholder="E-mail" type="email" required></ion-input>
         <ion-button @click="addUser">Agregar</ion-button>
       </div>
+      <br>
 
     </ion-content>
   </ion-page>
 </template>
 
+
 <style>
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 11px;
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(78, 78, 78);
+  background-color: transparent;
+  border: none;
+}	
+
+.floating-form {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 520px;
+  gap: 11px;
+  transform: translate(-50%, -50%);
+  background-color: white; /* Fondo transparente */
+  padding: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.25); /* Borde del formulario */
+  border-radius: 12px; /* Mayor radio para la figura circular */
+  box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.25);
+  z-index: 1; /* Para que aparezca por encima del contenido */
+}
+
 .login-text{
   font-weight: bold;
   color: rgb(78, 78, 78);
@@ -109,6 +175,7 @@ export default {
   border: 2px solid rgb(199, 199, 199);
   border-radius: 8px;
   transition: 0.3s;
+  padding-left: 8px;
 }
 
 .custom-select::part(icon) {
@@ -121,6 +188,20 @@ export default {
 
 .custom-select {
   --placeholder-color: rgb(199, 199, 199);
+}
+
+
+.user-list ion-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.user-list ion-label {
+  font-weight: bold;
+}
+
+.user-list ion-button {
+  margin-left: 10px;
 }
 
 </style>

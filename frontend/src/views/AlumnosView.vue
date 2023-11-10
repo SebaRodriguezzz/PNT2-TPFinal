@@ -56,7 +56,6 @@ export default {
       <h2>Alumnos</h2>
       <br>
       <br>
-      <ion-content>
         <!-- Lista de usuarios -->
         <div class="login-text">Usuarios agregados</div><br>
         <!-- Botón para abrir el formulario -->
@@ -71,7 +70,6 @@ export default {
           </ion-label>
           <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>
         </ion-item>
-      </ion-content>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">
         <button @click="mostrarFormulario" class="close-button">X</button>

@@ -15,8 +15,8 @@ export default {
     return {
       user: {rol : "profe"},
       lista:[],
-      mostrarFormularioFlag: false // Inicialmente oculto
-
+      mostrarFormularioFlag: false, // Inicialmente oculto
+      showPassword: false
     }
   },
   mounted() {
@@ -41,6 +41,9 @@ export default {
     },
     mostrarFormulario() {
       this.mostrarFormularioFlag = !this.mostrarFormularioFlag; // Mostrar el formulario al hacer clic
+    },
+    mostrarContraseña(item) {
+      item.showPassword = !item.showPassword;
     }
 
   }
@@ -49,28 +52,32 @@ export default {
 
 <template>
   <ion-page>
-    <ion-content class="ion-padding">
-      <h2>Profesores</h2>
+    <ion-content class="ion-padding"><br><br><br>
+
+      <h2 class="login-text">Profesores</h2>
       <!-- Botón para abrir el formulario -->
       <ion-button @click="mostrarFormulario">Agregar Profe</ion-button>
       <!-- Lista de usuarios -->
-      <ion-list v-for="e in lista" :key="e.id">
-        {{ e.email }} {{ e.password }}
-        <ion-button @click="deleteData(e.id)">Eliminar</ion-button>
-        <ion-button @click="putData(e.id)">Modificar</ion-button>
-      </ion-list>
+      <ion-item v-for="e in lista" :key="e.id">
+          <ion-label>Email: {{ e.email }}</ion-label>
+          <ion-label>
+            Password:
+            <span v-if="!e.showPassword">********</span>
+            <span v-else>{{ e.password }}</span>
+          </ion-label>
+          <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>
+        </ion-item>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">
-        <div >
+          <button @click="mostrarFormulario" class="close-button">X</button>
           <div class="login-text">Agregar profesor</div>
-          <ion-input class="input" v-model="user.nombre" placeholder="nombre" type="text"></ion-input>
-          <ion-input class="input" v-model="user.apellido" placeholder="apellido" type="text"></ion-input>
-          <ion-input class="input" v-model="user.dni" placeholder="dni" type="text"></ion-input>
-          <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email"></ion-input>
-          <ion-input class="input" v-model="user.password" placeholder="Password" type="password"></ion-input>
+          <ion-input class="input" v-model="user.nombre" placeholder="Nombre" type="text" required></ion-input>
+          <ion-input class="input" v-model="user.apellido" placeholder="Apellido" type="text" required></ion-input>
+          <ion-input class="input" v-model="user.dni" placeholder="DNI" type="text" required></ion-input>
+          <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email" required></ion-input>
+          <ion-input class="input" v-model="user.password" placeholder="Contraseña" type="password" required></ion-input>
           <ion-button @click="addUser">Agregar</ion-button>
         </div>
-      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -133,12 +140,11 @@ export default {
 
 .floating-form {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 400px;
-  height: 520px;
   gap: 11px;
   transform: translate(-50%, -50%);
   background-color: white; /* Fondo transparente */
