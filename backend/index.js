@@ -24,6 +24,10 @@ const users = [
    {email:'profe2@test.com',password:'1234','rol':'profe'}
 ]
 
+const clases = [
+
+]
+
 const adminMiddleware =(req,res,next)=>{
   const user = user.filter(u => req.body.user.email == u.email)
   if(user.rol == 'admin') {
@@ -71,8 +75,8 @@ app.get('/profes', (req, res) => {
 })
 
 app.get('/clases', (req, res) => {
-  const listaUsuarios = users.filter(u => u.rol == "alumno")
-  res.json(listaUsuarios)
+  const listaClases = clases
+  res.json(listaClases)
 })
 
 app.get('/rutinas', (req, res) => {
@@ -80,11 +84,23 @@ app.get('/rutinas', (req, res) => {
   res.json(listaUsuarios)
 }) 
 
+
 app.post('/usuarios/agregar',(req,res) =>{
   console.log(req.body);
   if(req.body) {
     const usuario = req.body;
     users.push(usuario)
+    res.status(200).json({message:'bien'})
+  } else {
+    res.status(400).json({message:'error'})
+  }
+})
+
+app.post('/clases/agregar',(req,res) =>{
+  console.log(req.body);
+  if(req.body) {
+    const clase = req.body;
+    clases.push(clase)
     res.status(200).json({message:'bien'})
   } else {
     res.status(400).json({message:'error'})
