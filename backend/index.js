@@ -20,7 +20,8 @@ const users = [
   {email:'alumno@test.com',password:'1234','rol':'alumno'},
   {email:'admin2@test.com',password:'1234','rol':'admin'},
   {email:'alumno2@test.com',password:'1234','rol':'alumno'},
-  {email:'profe@test.com',password:'1234','rol':'profe'}
+  {email:'profe@test.com',password:'1234','rol':'profe'}, 
+   {email:'profe2@test.com',password:'1234','rol':'profe'}
 ]
 
 const adminMiddleware =(req,res,next)=>{
@@ -64,8 +65,8 @@ app.get('/alumnos', (req, res) => {
   res.json(listaUsuarios)
 })
 
-app.get('/profesores', (req, res) => {
-  const listaUsuarios = users.filter(u => u.rol == "alumno")
+app.get('/profes', (req, res) => {
+  const listaUsuarios = users.filter(u => u.rol == "profe")
   res.json(listaUsuarios)
 })
 
@@ -79,11 +80,11 @@ app.get('/rutinas', (req, res) => {
   res.json(listaUsuarios)
 }) 
 
-app.post('/alumnos/agregar',(req,res) =>{
+app.post('/usuarios/agregar',(req,res) =>{
   console.log(req.body);
   if(req.body) {
-    const alumno = req.body;
-    users.push(alumno)
+    const usuario = req.body;
+    users.push(usuario)
     res.status(200).json({message:'bien'})
   } else {
     res.status(400).json({message:'error'})
