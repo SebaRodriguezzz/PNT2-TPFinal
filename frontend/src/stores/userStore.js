@@ -61,6 +61,14 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
+        async addClass(clase) {
+            try {
+            const response = await axios.get("http://localhost:3000/"+clase);
+            return response.data;
+            } catch (e) {
+                console.log(e);
+            }
+        },
 
     }
 })

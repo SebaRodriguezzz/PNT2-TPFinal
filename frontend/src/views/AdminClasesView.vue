@@ -8,8 +8,8 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const { cargarDatos,agregarUsuario } = store;
-    return { cargarDatos,agregarUsuario, estaLogeado };
+    const {addClass, cargarDatos,agregarUsuario } = store;
+    return {addClass, cargarDatos,agregarUsuario, estaLogeado };
   },
   data() {
     return {
@@ -23,9 +23,8 @@ export default {
 
   methods: {
   
-    async addUser() {
-      console.log("Hasta aca perfecto")
-      await this.agregarUsuario(this.user);
+    async agregarClase() {
+      await this.addClass(this.clase);
       alert("Se agrego correctamente")
       await loadData()
       this.$router.push("/")
@@ -81,6 +80,7 @@ export default {
         <ion-input class="input" v-model="clase.limitePersonas" placeholder="Limite de gente" type="text" required></ion-input>
         <ion-input class="input" v-model="clase.horario" placeholder="Horario de inicio" type="email" required></ion-input>
         <ion-input class="input" v-model="clase.duracion" placeholder="Duracion" type="password" required></ion-input>
+        <ion-button @click="agregarClase">Agregar</ion-button>
       </div>
       <br>
 
