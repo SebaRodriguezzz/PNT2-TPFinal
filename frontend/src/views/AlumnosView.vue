@@ -68,7 +68,7 @@ export default {
             <span v-if="!e.showPassword">********</span>
             <span v-else>{{ e.password }}</span>
           </ion-label>
-          <ion-button >Editar</ion-button>
+          <ion-button @click="gd" >Editar</ion-button>
           <ion-button >Borrar</ion-button>
           <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>
         </ion-item>

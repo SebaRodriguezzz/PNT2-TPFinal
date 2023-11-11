@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      user: {rol : "profe"},
+      user: {rol: "profe"},
       lista:[],
       mostrarFormularioFlag: false, // Inicialmente oculto
       showPassword: false

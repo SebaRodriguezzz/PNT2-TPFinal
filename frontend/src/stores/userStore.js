@@ -48,7 +48,7 @@ export const loginStore = defineStore('login', {
         async agregarUsuario(usuario) {
             try {
             console.log("2da parte hecha")
-            const datos = await axios.post("http://localhost:3000/alumnos/agregar", usuario);
+            const datos = await axios.post("http://localhost:3000/usuarios/agregar", usuario);
             } catch (e) {
                 console.log(e);
             }
