@@ -15,7 +15,7 @@ export default {
     return {
       user: {rol : "alumno"},
       clase: {},
-      profes:[{nombre: "Claudio",id:1},{nombre: "Maria",id:2}],
+      profes:[{nombre: "Claudio",id:1},{nombre: "Maria",id:2},{nombre: "Sebastian",id:3}],
       mostrarFormularioFlag: false, // Inicialmente oculto
       showPassword: false
     }
@@ -71,8 +71,8 @@ export default {
         <ion-input class="input" v-model="clase.nombre" placeholder="Nombre de actividad/clase" type="text" required></ion-input>
 
         <ion-select class="input custom-select" v-model="clase.nombreProfe" placeholder="Selecciona profe" required>
-          <ion-item v-for="e in profes" :key="e.id">
-          <ion-select-option value="Profe"> {{ e.nombre }} </ion-select-option>
+        <ion-item v-for="e in profes" :key="e.id">
+          <ion-select-option :value="e.nombre"> {{ e.nombre }} </ion-select-option>
         </ion-item>
 
          
