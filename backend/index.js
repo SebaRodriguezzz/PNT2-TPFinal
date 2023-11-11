@@ -59,9 +59,24 @@ app.post('/login',(req,res) =>{
   }
 })
 
-app.get('/alumnos',(req,res) =>{
-const listaUsuarios = users
-res.json(listaUsuarios)
+app.get('/alumnos', (req, res) => {
+  const listaUsuarios = users.filter(u => u.rol == "alumno")
+  res.json(listaUsuarios)
+})
+
+app.get('/profesores', (req, res) => {
+  const listaUsuarios = users.filter(u => u.rol == "alumno")
+  res.json(listaUsuarios)
+})
+
+app.get('/clases', (req, res) => {
+  const listaUsuarios = users.filter(u => u.rol == "alumno")
+  res.json(listaUsuarios)
+})
+
+app.get('/rutinas', (req, res) => {
+  const listaUsuarios = users.filter(u => u.rol == "alumno")
+  res.json(listaUsuarios)
 }) 
 
 app.post('/alumnos/agregar',(req,res) =>{
