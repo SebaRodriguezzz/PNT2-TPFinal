@@ -7,7 +7,9 @@ export const loginStore = defineStore('login', {
             usuario: {},
             estaLogeado: false,
             esAdmin: false,
-            esAlumno: false,
+            esAlumnoBasico: false,
+            esAlumnoPlatino: false,
+            esAlumnoOro: false,
             esProfe: false,
             idLogeado: 1
 
@@ -61,10 +63,9 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
-        async addClass(clase) {
+        async addClass(clase,clases) {
             try {
-            const response = await axios.get("http://localhost:3000/"+clase);
-            return response.data;
+            const datos = await axios.post("http://localhost:3000/"+clases+"/agregar",clase);
             } catch (e) {
                 console.log(e);
             }

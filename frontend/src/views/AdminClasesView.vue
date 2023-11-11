@@ -14,17 +14,29 @@ export default {
   data() {
     return {
       user: {rol : "alumno"},
+      lista: [],
       clase: {},
       profes:[{nombre: "Claudio",id:1},{nombre: "Maria",id:2},{nombre: "Sebastian",id:3}],
       mostrarFormularioFlag: false, // Inicialmente oculto
       showPassword: false
     }
   },
-
+  mounted() {
+    this.loadData()
+  },
+  
   methods: {
+    async loadData() {
+      try {
+        this.lista = await this.cargarDatos("clases")
+      } catch(e) {
+        console.log(e);
+        this.errorMessage = "Se produjo un error"
+      }
+    },
   
     async agregarClase() {
-      await this.addClass(this.clase);
+      await this.addClass(this.clase,"clases");
       alert("Se agrego correctamente")
       await loadData()
       this.$router.push("/")
@@ -55,13 +67,8 @@ export default {
         <ion-button @click="mostrarFormulario">Agregar clase</ion-button><br><br>
 
         <ion-item v-for="e in lista" :key="e.id">
-          <ion-label>Email: {{ e.email }}</ion-label>
-          <ion-label>
-            Password:
-            <span v-if="!e.showPassword">********</span>
-            <span v-else>{{ e.password }}</span>
-          </ion-label>
-          <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>
+          <ion-label>Nombre clase: {{ e.nombre }}</ion-label>
+          <ion-label>Nombre profe: {{ e.nombreProfe }}</ion-label>
         </ion-item>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">

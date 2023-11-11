@@ -46,6 +46,8 @@ export default {
 
 <style>
 
+
+
 .login-text{
   font-weight: bold;
   color: rgb(78, 78, 78);

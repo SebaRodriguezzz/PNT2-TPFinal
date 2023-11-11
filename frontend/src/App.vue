@@ -8,10 +8,11 @@ export default {
   components: { IonApp, IonRouterOutlet, IonHeader, IonButton },
   setup() {
     const store1 = loginStore();
-    const { esAlumno,esProfe,esAdmin,usuario, estaLogeado} = storeToRefs(store1);
+    const { esAlumno, esAlumnoPlatino, esAlumnoOro,
+      esProfe,esAdmin,usuario, estaLogeado} = storeToRefs(store1);
     const { logout } = store1;
 
-    return {esAlumno,esProfe,esAdmin,usuario, estaLogeado, logout};
+    return {esAlumnoPlatino,esAlumnoOro,esAlumno,esProfe,esAdmin,usuario, estaLogeado, logout};
   },
   methods: {
        logoutForm() {
@@ -38,6 +39,7 @@ export default {
         <RouterLink class="custom-button" to="/profe/inicio" v-if="estaLogeado && esProfe">Rutinas</RouterLink>
         <RouterLink class="custom-button" to="/profe/alumnos" v-if="estaLogeado && esProfe">Alumnos a cargo</RouterLink>
         <RouterLink class="custom-button" to="/perfil" v-if="estaLogeado">Perfil</RouterLink>
+        <RouterLink class="custom-button" to="/alumno/clases" v-if="estaLogeado && (esAlumnoPlatino || esAlumnoOro)">Clases</RouterLink>
         <RouterLink class="custom-button" to="/login" v-if="!estaLogeado">Login</RouterLink>
       
       </div>
