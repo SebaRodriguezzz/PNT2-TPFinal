@@ -25,7 +25,7 @@ export default {
   methods: {
     async loadData() {
       try {
-        this.lista = await this.cargarDatos()
+        this.lista = await this.cargarDatos("rutinas")
       } catch(e) {
         console.log(e);
         this.errorMessage = "Se produjo un error"
@@ -62,37 +62,20 @@ export default {
       <ion-button @click="mostrarFormulario">Agregar Rutina</ion-button><br><br>
 
       <ion-item v-for="e in lista" :key="e.id">
-        <ion-label>Email: {{ e.email }}</ion-label>
-        <ion-label>
-          Password:
-          <span v-if="!e.showPassword">********</span>
-          <span v-else>{{ e.password }}</span>
-        </ion-label>
+        <ion-label>Descripcion: {{ e.descripcion }}</ion-label>
+        <ion-label>Alumno: {{ e.nombreAlumno }}</ion-label>
+        <ion-label>Nivel: {{ e.nivel }}</ion-label>
         <ion-button @click="deleteData(e.id)">Eliminar</ion-button>
         <ion-button @click="putData(e.id)">Modificar</ion-button>
       </ion-item>
-      <!-- Formulario flotante -->
-
-
-
-
-
-      
-
-
-      <!-- No esta funcionando el mostrar formulario-->
-
-
-
-
-
+  
       <div class="floating-form" v-if="mostrarFormularioFlag">
         <button @click="mostrarFormulario" class="close-button">X</button>
         <div class="login-text">Agregar rutina </div>
-        <ion-input class="input" v-model="rutina.nombre" placeholder="Nombre" type="text" required></ion-input>
-        <ion-input class="input" v-model="rutina.profesor" placeholder="ID profesor" type="text" required></ion-input>
-        <ion-input class="input" v-model="rutina.nivel" placeholder="DNI" type="text" required></ion-input>
-        <ion-input class="input" v-model="rutina.dias" placeholder="E-mail" type="email" required></ion-input>
+        <ion-input class="input" v-model="rutina.nombre" placeholder="Nombre Rutina" type="text" required></ion-input>
+        <ion-input class="input" v-model="rutina.alumno" placeholder="Alumno" type="text" required></ion-input>
+        <ion-input class="input" v-model="rutina.nivel" placeholder="Nivel" type="text" required></ion-input>
+
         <ion-button @click="addUser">Agregar</ion-button>
       </div>
       <br>

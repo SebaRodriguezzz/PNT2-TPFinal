@@ -25,7 +25,7 @@ export default {
   methods: {
     async loadData() {
       try {
-        this.lista = await this.cargarDatos()
+        this.lista = await this.cargarDatos("alumnos")
       } catch(e) {
         console.log(e);
         this.errorMessage = "Se produjo un error"
@@ -59,7 +59,7 @@ export default {
         <!-- Lista de usuarios -->
         <div class="login-text">Alumnos agregados</div><br>
         <!-- Botón para abrir el formulario -->
-        <ion-button @click="mostrarFormulario">Agregar Usuario</ion-button><br><br>
+        <ion-button @click="mostrarFormulario">Agregar Alumno</ion-button><br><br>
 
         <ion-item v-for="e in lista" :key="e.id">
           <ion-label>Email: {{ e.email }}</ion-label>

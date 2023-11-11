@@ -53,9 +53,9 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
-        async cargarDatos() {
+        async cargarDatos(objetos) {
             try {
-            const response = await axios.get("http://localhost:3000/alumnos");
+            const response = await axios.get("http://localhost:3000/"+objetos);
             return response.data;
             } catch (e) {
                 console.log(e);

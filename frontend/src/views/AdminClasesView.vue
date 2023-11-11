@@ -46,7 +46,8 @@ export default {
 <template>
   <ion-page>
     <ion-content class="ion-padding">
-    
+      <br>
+      <br>
       <br>
       <br>
         <!-- Lista de usuarios -->

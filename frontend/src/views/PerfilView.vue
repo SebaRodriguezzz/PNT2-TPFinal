@@ -63,7 +63,8 @@ export default {
      <div class="modify-form" v-if="mostrarFlagModifEmail">
         <div >
           <div class="login-text">Modificar email</div>
-          <ion-input class="input" v-model="usuario.email" placeholder="Ingrese email" type="text"></ion-input>
+          <ion-input class="input" placeholder="Ingrese email actual" type="email"></ion-input>
+          <ion-input class="input" v-model="usuario.nuevoEmail" placeholder="Ingrese nuevo email" type="email"></ion-input>
         </div>
       </div>
 
@@ -71,7 +72,8 @@ export default {
      <div class="modify-form" v-if="mostrarFlagModifContra">
         <div >
           <div class="login-text">Modificar contraseña</div>
-          <ion-input class="input" v-model="usuario.contraseña" placeholder="Ingrese contraseña" type="text"></ion-input>
+          <ion-input class="input" placeholder="Ingrese contraseña actual" type="password"></ion-input>
+          <ion-input class="input" v-model="usuario.nuevaContra" placeholder="Ingrese nueva contraseña" type="password"></ion-input>
         </div>
       </div>
 

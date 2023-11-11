@@ -25,7 +25,7 @@ export default {
   methods: {
     async loadData() {
       try {
-        this.lista = await this.cargarDatos()
+        this.lista = await this.cargarDatos("profes")
       } catch(e) {
         console.log(e);
         this.errorMessage = "Se produjo un error"
