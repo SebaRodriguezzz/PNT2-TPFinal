@@ -14,23 +14,15 @@ export default {
   data() {
     return {
       user: {rol : "alumno"},
-      lista:[],
-      mostrarFormularioFlag: false // Inicialmente oculto
-
+      clase: {},
+      profes:[{nombre: "Claudio",id:1},{nombre: "Maria",id:2}],
+      mostrarFormularioFlag: false, // Inicialmente oculto
+      showPassword: false
     }
   },
-  mounted() {
-    this.loadData()
-  },
+
   methods: {
-    async loadData() {
-      try {
-        this.lista = await this.cargarDatos()
-      } catch(e) {
-        console.log(e);
-        this.errorMessage = "Se produjo un error"
-      }
-    },
+  
     async addUser() {
       console.log("Hasta aca perfecto")
       await this.agregarUsuario(this.user);
@@ -40,7 +32,11 @@ export default {
 
     },
     mostrarFormulario() {
+      console.log("Se abre el form")
       this.mostrarFormularioFlag = !this.mostrarFormularioFlag; // Mostrar el formulario al hacer clic
+    },
+    mostrarContraseña(item) {
+      item.showPassword = !item.showPassword;
     }
 
   }
@@ -50,30 +46,80 @@ export default {
 <template>
   <ion-page>
     <ion-content class="ion-padding">
-      <h2>Alumnos</h2>
-      <!-- Botón para abrir el formulario -->
-      <ion-button @click="mostrarFormulario">Agregar Usuario</ion-button>
-      <!-- Lista de usuarios -->
-      <ion-list v-for="e in lista" :key="e.id">
-        {{ e.email }} {{ e.password }}
-        <ion-button @click="deleteData(e.id)">Eliminar</ion-button>
-        <ion-button @click="putData(e.id)">Modificar</ion-button>
-      </ion-list>
+    
+      <br>
+      <br>
+        <!-- Lista de usuarios -->
+        <div class="login-text">Clases agregadas</div><br>
+        <!-- Botón para abrir el formulario -->
+        <ion-button @click="mostrarFormulario">Agregar clase</ion-button><br><br>
+
+        <ion-item v-for="e in lista" :key="e.id">
+          <ion-label>Email: {{ e.email }}</ion-label>
+          <ion-label>
+            Password:
+            <span v-if="!e.showPassword">********</span>
+            <span v-else>{{ e.password }}</span>
+          </ion-label>
+          <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>
+        </ion-item>
       <!-- Formulario flotante -->
-      
-      <div class="container">
-        <div class="login-text">Agregar clase </div>
-        <ion-input class="input" v-model="clase.nombre" placeholder="nombre" type="text"></ion-input>
-        <ion-input class="input" v-model="clase.profesor" placeholder="apellido" type="text"></ion-input>
-        <ion-input class="input" v-model="clase.horario" placeholder="dni" type="text"></ion-input>
-        <ion-input class="input" v-model="clase.limitePersonas" placeholder="E-mail" type="email"></ion-input>
-        <ion-button @click="addUser">Agregar</ion-button>
+      <div class="floating-form" v-if="mostrarFormularioFlag">
+        <button @click="mostrarFormulario" class="close-button">X</button>
+        <div class="login-text">Agregar clase</div>
+        <ion-input class="input" v-model="clase.nombre" placeholder="Nombre de actividad/clase" type="text" required></ion-input>
+
+        <ion-select class="input custom-select" v-model="clase.nombreProfe" placeholder="Selecciona profe" required>
+          <ion-item v-for="e in profes" :key="e.id">
+          <ion-select-option value="Profe"> {{ e.nombre }} </ion-select-option>
+        </ion-item>
+
+         
+        
+        </ion-select>
+        <ion-input class="input" v-model="clase.limitePersonas" placeholder="Limite de gente" type="text" required></ion-input>
+        <ion-input class="input" v-model="clase.horario" placeholder="Horario de inicio" type="email" required></ion-input>
+        <ion-input class="input" v-model="clase.duracion" placeholder="Duracion" type="password" required></ion-input>
       </div>
+      <br>
+
     </ion-content>
   </ion-page>
 </template>
 
+
 <style>
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 11px;
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(78, 78, 78);
+  background-color: transparent;
+  border: none;
+}	
+
+.floating-form {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 520px;
+  gap: 11px;
+  transform: translate(-50%, -50%);
+  background-color: white; /* Fondo transparente */
+  padding: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.25); /* Borde del formulario */
+  border-radius: 12px; /* Mayor radio para la figura circular */
+  box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.25);
+  z-index: 1; /* Para que aparezca por encima del contenido */
+}
+
 .login-text{
   font-weight: bold;
   color: rgb(78, 78, 78);
@@ -115,6 +161,7 @@ export default {
   border: 2px solid rgb(199, 199, 199);
   border-radius: 8px;
   transition: 0.3s;
+  padding-left: 8px;
 }
 
 .custom-select::part(icon) {
@@ -129,33 +176,18 @@ export default {
   --placeholder-color: rgb(199, 199, 199);
 }
 
-.floating-form {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  height: 520px;
-  gap: 11px;
-  transform: translate(-50%, -50%);
-  background-color: white; /* Fondo transparente */
-  padding: 20px;
-  border: 2px solid rgba(0, 0, 0, 0.25); /* Borde del formulario */
-  border-radius: 12px; /* Mayor radio para la figura circular */
-  box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.25);
-  z-index: 1; /* Para que aparezca por encima del contenido */
+
+.user-list ion-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
+
+.user-list ion-label {
+  font-weight: bold;
+}
+
+.user-list ion-button {
+  margin-left: 10px;
+}
+
 </style>
-
-
-
-
-
-
-
-
-
-
-
-

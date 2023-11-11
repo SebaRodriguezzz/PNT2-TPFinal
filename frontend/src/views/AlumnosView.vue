@@ -57,7 +57,7 @@ export default {
       <br>
       <br>
         <!-- Lista de usuarios -->
-        <div class="login-text">Usuarios agregados</div><br>
+        <div class="login-text">Alumnos agregados</div><br>
         <!-- Botón para abrir el formulario -->
         <ion-button @click="mostrarFormulario">Agregar Usuario</ion-button><br><br>
 
