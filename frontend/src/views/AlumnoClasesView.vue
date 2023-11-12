@@ -8,8 +8,8 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const {addObject, cargarDatos,agregarUsuario } = store;
-    return {addObject, cargarDatos,agregarUsuario, estaLogeado };
+    const {insicribirseAClase,addObject, cargarDatos,agregarUsuario } = store;
+    return {insicribirseAClase,addObject, cargarDatos,agregarUsuario, estaLogeado };
   },
   data() {
     return {

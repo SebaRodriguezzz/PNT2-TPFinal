@@ -13,8 +13,6 @@ export const loginStore = defineStore('login', {
             esAlumnoOro: false,
             esProfe: false,
             idLogeado: 0
-            
-
         }
     },
     actions: {
@@ -24,7 +22,6 @@ export const loginStore = defineStore('login', {
                 console.log(datos.data.email);
                 if (datos.status == 200) {
                     const decryptedToken = jwtDecode(datos.data.token)
-                    console.log(decryptedToken.plan)
                     this.esAdmin = decryptedToken.rol == 'admin';
                     this.esProfe = decryptedToken.rol == 'profe';
                     this.esAlumno = decryptedToken.rol == 'alumno';
@@ -35,7 +32,7 @@ export const loginStore = defineStore('login', {
                     this.estaLogeado = true;
                     this.usuario.email = usuario.email;
                     this.usuario.password = usuario.password;
-                    
+                    this.usuario.id = decryptedToken.id;
 
                     localStorage.setItem('usuario', JSON.stringify(
                         { email: usuario.email, token: datos.data.token }))
@@ -81,6 +78,7 @@ export const loginStore = defineStore('login', {
         },
         async insicribirseAClase(idClase) {
             try {
+            console.log("Hasta aca va bien " +idClase + this.usuario.id)
             const datos = await axios.post("http://localhost:3000/clases/agregar/:"+idClase,this.usuario);
             } catch (e) {
                 console.log(e);
