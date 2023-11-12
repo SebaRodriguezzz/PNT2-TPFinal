@@ -16,7 +16,7 @@ export default {
       user: {rol : "alumno"},
       lista: [],
       clase: {},
-      profes:[{nombre: "Claudio",id:1},{nombre: "Maria",id:2},{nombre: "Sebastian",id:3}],
+      profes:[],
       mostrarFormularioFlag: false, // Inicialmente oculto
       showPassword: false
     }
@@ -28,6 +28,7 @@ export default {
   methods: {
     async loadData() {
       try {
+        this.profes = await this.cargarDatos("profes")
         this.lista = await this.cargarDatos("clases")
       } catch(e) {
         console.log(e);
@@ -70,7 +71,8 @@ export default {
           <ion-label>Nombre clase: {{ e.nombre }}</ion-label>
           <ion-label>Nombre profe: {{ e.nombreProfe }}</ion-label>
           <ion-label>Horario: {{ e.horario }}</ion-label>
-          <ion-label>Cupos disponibles: {{ e.cuposDisponibles }}</ion-label>
+          <ion-label>Capacidad: {{ e.capacidad }}</ion-label>
+          <ion-label>Anotados: {{ e.anotados }}</ion-label>
         </ion-item>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">

@@ -24,13 +24,18 @@ export const loginStore = defineStore('login', {
                 console.log(datos.data.email);
                 if (datos.status == 200) {
                     const decryptedToken = jwtDecode(datos.data.token)
+                    console.log(decryptedToken.plan)
                     this.esAdmin = decryptedToken.rol == 'admin';
                     this.esProfe = decryptedToken.rol == 'profe';
                     this.esAlumno = decryptedToken.rol == 'alumno';
+                    this.idLogeado = decryptedToken.id;
+                    this.esAlumnoBasico = decryptedToken.plan == 'basico';
+                    this.esAlumnoPlatino = decryptedToken.plan == 'platino';
+                    this.esAlumnoOro = decryptedToken.plan == 'oro';
                     this.estaLogeado = true;
                     this.usuario.email = usuario.email;
                     this.usuario.password = usuario.password;
-                    this.idLogeado = usuario.id
+                    
 
                     localStorage.setItem('usuario', JSON.stringify(
                         { email: usuario.email, token: datos.data.token }))
@@ -70,6 +75,13 @@ export const loginStore = defineStore('login', {
         async addObject(objeto,objetos) {
             try {
             const datos = await axios.post("http://localhost:3000/"+objetos+"/agregar",objeto);
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async insicribirseAClase(idClase) {
+            try {
+            const datos = await axios.post("http://localhost:3000/clases/agregar/:"+idClase,this.usuario);
             } catch (e) {
                 console.log(e);
             }

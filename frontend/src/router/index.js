@@ -9,6 +9,7 @@ import AdminProfe from '../views/AdminProfesoresView.vue'
 import AdminClases from '../views/AdminClasesView.vue'
 import VistaRutinas from '../views/RutinasView.vue'
 import VistaPerfil from '../views/PerfilView.vue'
+import VistaAlumnoClases from '../views/AlumnoClasesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -84,6 +85,12 @@ const router = createRouter({
       path: '/perfil',
       name: 'vista perfil',
       component: VistaPerfil,
+    }
+    ,
+    {
+      path: '/alumno/clases',
+      name: 'vista alumno clases',
+      component: VistaAlumnoClases,
     }
     
     
