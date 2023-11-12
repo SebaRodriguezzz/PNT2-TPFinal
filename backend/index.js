@@ -16,7 +16,7 @@ app.use(express.static('public'))
 // base de prueba en memoria
 
 const users = [
-  {email:'admin@test.com',password:'1234','rol':'admin'},
+  {email:'admin@test.com',password:'1234','rol':'admin',id:4},
   {email:'alumnooro@test.com',password:'1234','rol':'alumno',plan:'oro',id:1},
   {email:'alumnoba@test.com',password:'1234','rol':'alumno',plan:'basico',id:2},
   {email:'alumnopla@test.com',password:'1234','rol':'alumno',plan:'platino',id:3},
@@ -133,6 +133,7 @@ app.post('/clases/agregar/:id',(req,res) =>{
   if(req.body) {
     const idClase = req.params;
     const usuario = req.body;
+    const claseUsuario = {claseId : idClase, usuarioId: usuario.id}
     usuariosInscriptos.push(claseUsuario)
     res.status(200).json({message:'bien'})
   } else {
