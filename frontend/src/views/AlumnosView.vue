@@ -68,6 +68,9 @@ export default {
             <span v-if="!e.showPassword">********</span>
             <span v-else>{{ e.password }}</span>
           </ion-label>
+          <ion-label>Plan: {{ e.plan }}</ion-label>
+          <ion-label>Rutina: {{ e.nombreRutina }}</ion-label>
+          <ion-label>Tipo de Rutina: {{ e.tipoRutina }}</ion-label>
           <ion-button @click="gd" >Editar</ion-button>
           <ion-button >Borrar</ion-button>
           <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>

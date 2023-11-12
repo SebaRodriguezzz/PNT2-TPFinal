@@ -7,11 +7,13 @@ export const loginStore = defineStore('login', {
             usuario: {},
             estaLogeado: false,
             esAdmin: false,
+            esAlumno: true,
             esAlumnoBasico: false,
             esAlumnoPlatino: false,
             esAlumnoOro: false,
             esProfe: false,
-            idLogeado: 1
+            idLogeado: 0
+            
 
         }
     },
@@ -28,6 +30,8 @@ export const loginStore = defineStore('login', {
                     this.estaLogeado = true;
                     this.usuario.email = usuario.email;
                     this.usuario.password = usuario.password;
+                    this.idLogeado = usuario.id
+
                     localStorage.setItem('usuario', JSON.stringify(
                         { email: usuario.email, token: datos.data.token }))
                 } else {
@@ -63,13 +67,14 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
-        async addClass(clase,clases) {
+        async addObject(objeto,objetos) {
             try {
-            const datos = await axios.post("http://localhost:3000/"+clases+"/agregar",clase);
+            const datos = await axios.post("http://localhost:3000/"+objetos+"/agregar",objeto);
             } catch (e) {
                 console.log(e);
             }
         },
+        
 
     }
 })

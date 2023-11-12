@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      user: {}
+      user: { alumnoEnGym: false}
     }
   },
   methods: {

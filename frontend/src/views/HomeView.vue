@@ -1,6 +1,8 @@
 <script>
 import {IonPage, IonContent, IonInput, IonButton} from '@ionic/vue'
 import { inject } from 'vue';
+import { storeToRefs } from "pinia";
+import { loginStore } from "../stores/userStore"
 
 export default {
   components: {IonPage, IonContent, IonInput, IonButton},
@@ -8,15 +10,32 @@ export default {
   setup() {
     // Accede a 'user' proporcionado desde el componente 'LoginView'
     const user = inject('user', null);
+    const store = loginStore();
+    const { idLogeado, estaLogeado, esAdmin, esAlumno } = storeToRefs(store);
+    return { idLogeado,esAdmin, estaLogeado,esAlumno};
+  },
+  data() {
+    return {
+      gym: { cantidadAhora: 0},
+      user: { estaEnElgym: false}
+    }
+  },
+  methods:{
+    agregarCantidad(){
+      if(user.estaEnElGym == false){
+        console.log("Correcto")
+        gym.cantidadAhora++
+      }
 
-    // Ahora puedes acceder a 'user' en este componente
-    if (user) {
-      console.log(user.username);
-      console.log(user.password);
+    },
+    disminuirCantidad(){
+
     }
 
-    return { user };
+
   }
+
+
 }
 </script>
 
@@ -28,6 +47,20 @@ export default {
         <ion-col size="12">
           <h1>Bienvenido al Gimnasio Fitness</h1>
           <h1>Bienvenido al gimnasio PNT2</h1>
+          <h2>Cantidad de alumnos en el gym </h2> {{ this.gym.cantidadAhora }}
+          <div v-if="estaLogeado && esAdmin">
+            <h1> Agregar limite del gym</h1>
+          <ion-input class="input" v-model="gym.limite" placeholder="Limite de personas" type="number"></ion-input>
+          <ion-button @click="loginForm">Agregar</ion-button>
+          </div>
+          <div v-if="estaLogeado && esAlumno">
+            <h1 v-if="user.estaEnElgym">Estoy en el gym</h1>
+            <h1 v-else>No estoy en el gym</h1>
+            <ion-button @click="agregarCantidad">Estoy en el gym</ion-button>
+            <ion-button @click="disminuirCantidad">Me fui del gym</ion-button>
+          </div>
+          
+         
         </ion-col>
       </ion-row>
 

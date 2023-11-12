@@ -8,8 +8,8 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const { cargarDatos,agregarUsuario } = store;
-    return { cargarDatos,agregarUsuario, estaLogeado };
+    const {agregarRutina, cargarDatos,agregarUsuario } = store;
+    return {agregarRutina, cargarDatos,agregarUsuario, estaLogeado };
   },
   data() {
     return {
@@ -31,9 +31,9 @@ export default {
         this.errorMessage = "Se produjo un error"
       }
     },
-    async addUser() {
+    async addRutina() {
       console.log("Hasta aca perfecto")
-      await this.agregarUsuario(this.user);
+      await this.addObject(this.rutina,"rutinas");
       alert("Se agrego correctamente")
       await loadData()
       this.$router.push("/")
@@ -41,11 +41,8 @@ export default {
     },
     mostrarFormulario() {
       this.mostrarFormularioFlag = !this.mostrarFormularioFlag; // Mostrar el formulario al hacer clic
-    },
-    mostrarContraseña(item) {
-      item.showPassword = !item.showPassword;
     }
-
+    
   }
 }
 </script>
@@ -62,7 +59,7 @@ export default {
       <ion-button @click="mostrarFormulario">Agregar Rutina</ion-button><br><br>
 
       <ion-item v-for="e in lista" :key="e.id">
-        <ion-label>Descripcion: {{ e.descripcion }}</ion-label>
+        <ion-label>Descripcion: {{ e.nombre }}</ion-label>
         <ion-label>Alumno: {{ e.nombreAlumno }}</ion-label>
         <ion-label>Nivel: {{ e.nivel }}</ion-label>
         <ion-button @click="deleteData(e.id)">Eliminar</ion-button>
