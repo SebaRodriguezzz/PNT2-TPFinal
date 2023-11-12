@@ -17,19 +17,23 @@ app.use(express.static('public'))
 
 const users = [
   {email:'admin@test.com',password:'1234','rol':'admin'},
-  {email:'alumno@test.com',password:'1234','rol':'alumno'},
+  {email:'alumnooro@test.com',password:'1234','rol':'alumno',plan:'oro',id:1},
+  {email:'alumnoba@test.com',password:'1234','rol':'alumno',plan:'basico',id:2},
+  {email:'alumnopla@test.com',password:'1234','rol':'alumno',plan:'platino',id:3},
   {email:'admin2@test.com',password:'1234','rol':'admin'},
-  {email:'alumno2@test.com',password:'1234','rol':'alumno'},
   {email:'profe@test.com',password:'1234','rol':'profe'}, 
    {email:'profe2@test.com',password:'1234','rol':'profe'}
 ]
 
 const clases = [
-  {nombre:'Salsa',nombreProfe:'Claudio', horario: 1600}
-
+  {nombre:'Salsa',nombreProfe:'Claudio', horario: 1600, capacidad: 20, anotados:0, id:1},
+  {nombre:'Bachata',nombreProfe:'Pepito', horario: 1700,capacidad: 20, anotados:0, id:2},
+  {nombre:'Tango',nombreProfe:'Juan', horario: 1500,capacidad: 20, anotados:0, id:3}
 ]
 
 const rutinas = [ {nombre:"Torso-Pierna" , nombreAlumno:"Pepe" , nivel:"Basico"}]
+
+const usuariosInscriptos = []
 
 const adminMiddleware =(req,res,next)=>{
   const user = user.filter(u => req.body.user.email == u.email)
@@ -57,7 +61,8 @@ app.post('/login',(req,res) =>{
     const user = req.body;
     const userDb = users.find(u=>u.email==user.email&&u.password==user.password)
     if(userDb) {
-      const token = jsonwebtoken.sign({email:userDb.email,rol: userDb.rol},'clave_secreta')
+      const token = jsonwebtoken.sign({email:userDb.email,rol: userDb.rol,plan:userDb.plan,
+      id: userDb.id},'clave_secreta')
       res.json({token:token})
     } else {
       res.status(401).json({message:'error'})
@@ -78,7 +83,7 @@ app.get('/profes', (req, res) => {
 })
 
 app.get('/clases', (req, res) => {
-  const listaClases = clases
+  const listaClases = clases.sort((a,b)=>a.horario - b.horario)
   res.json(listaClases)
 })
 
@@ -120,6 +125,21 @@ app.post('/rutinas/agregar',(req,res) =>{
     res.status(400).json({message:'error'})
   }
 })
+
+
+///Me quede con esta, quiero agregar los usuarios inscriptos en cada clase
+app.post('/clases/agregar/:id',(req,res) =>{
+  console.log(req.body);
+  if(req.body) {
+    const idClase = req.params;
+    const usuario = req.body;
+    usuariosInscriptos.push(claseUsuario)
+    res.status(200).json({message:'bien'})
+  } else {
+    res.status(400).json({message:'error'})
+  }
+})
+
 
 const lista = [{id:100,name:'Charly'},{id:200,name:'Jhon'}]
 app.get('/lista', (req, res) => {
