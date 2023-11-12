@@ -25,8 +25,11 @@ const users = [
 ]
 
 const clases = [
+  {nombre:'Salsa',nombreProfe:'Claudio', horario: 1600}
 
 ]
+
+const rutinas = [ {nombre:"Torso-Pierna" , nombreAlumno:"Pepe" , nivel:"Basico"}]
 
 const adminMiddleware =(req,res,next)=>{
   const user = user.filter(u => req.body.user.email == u.email)
@@ -80,8 +83,8 @@ app.get('/clases', (req, res) => {
 })
 
 app.get('/rutinas', (req, res) => {
-  const listaUsuarios = users.filter(u => u.rol == "alumno")
-  res.json(listaUsuarios)
+  const listaRutinas = rutinas
+  res.json(listaRutinas)
 }) 
 
 
@@ -101,6 +104,17 @@ app.post('/clases/agregar',(req,res) =>{
   if(req.body) {
     const clase = req.body;
     clases.push(clase)
+    res.status(200).json({message:'bien'})
+  } else {
+    res.status(400).json({message:'error'})
+  }
+})
+
+app.post('/rutinas/agregar',(req,res) =>{
+  console.log(req.body);
+  if(req.body) {
+    const rutina = req.body;
+    rutinas.push(rutina)
     res.status(200).json({message:'bien'})
   } else {
     res.status(400).json({message:'error'})
