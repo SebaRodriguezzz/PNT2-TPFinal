@@ -16,10 +16,10 @@ app.use(express.static('public'))
 // base de prueba en memoria
 
 const users = [
-  {email:'admin@test.com',password:'1234','rol':'admin',id:4},
-  {email:'alumnooro@test.com',password:'1234','rol':'alumno',plan:'oro',id:1},
-  {email:'alumnoba@test.com',password:'1234','rol':'alumno',plan:'basico',id:2},
-  {email:'alumnopla@test.com',password:'1234','rol':'alumno',plan:'platino',id:3},
+  {email:'admin@test.com',password:'1234','rol':'admin',id: 4},
+  {email:'alumnooro@test.com',password:'1234','rol':'alumno',plan:'oro',id: 1},
+  {email:'alumnoba@test.com',password:'1234','rol':'alumno',plan:'basico',id: 2},
+  {email:'alumnopla@test.com',password:'1234','rol':'alumno',plan:'platino',id: 3},
   {email:'admin2@test.com',password:'1234','rol':'admin'},
   {email:'profe@test.com',password:'1234','rol':'profe'}, 
    {email:'profe2@test.com',password:'1234','rol':'profe'}
@@ -131,11 +131,26 @@ app.post('/rutinas/agregar',(req,res) =>{
 app.post('/clases/agregar/:id',(req,res) =>{
   console.log(req.body);
   if(req.body) {
-    const idClase = req.params;
+    const {id: idClase} = req.params
     const usuario = req.body;
-    const claseUsuario = {claseId : idClase, usuarioId: usuario.id}
-    usuariosInscriptos.push(claseUsuario)
-    res.status(200).json({message:'bien'})
+    //objeto clase y usuario
+    const claseYusuario = {idClase: idClase, idUsuario: usuario.id}
+    
+    //busco la clase
+    const listaClases = clases.filter(c => c.id == idClase)
+
+    const usuarioInscripto = usuariosInscriptos.filter(u=>u.claseId==idClase&&u.usuarioId==usuario.id)
+    if(listaClases[0].anotados < listaClases[0].capacidad && usuarioInscripto[0] == null) {
+      console.log("Pusheamos el usuario a la clase")
+      console.log(claseYusuario.idClase)
+      usuariosInscriptos.push(claseYusuario)
+      console.log(usuariosInscriptos[0].idUsuario + "Esta bien el id")
+      listaClases[0].anotados++
+      console.log(listaClases[0].anotados)
+
+    }
+  
+
   } else {
     res.status(400).json({message:'error'})
   }
