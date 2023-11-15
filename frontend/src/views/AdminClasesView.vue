@@ -73,6 +73,9 @@ export default {
           <ion-label>Horario: {{ e.horario }}</ion-label>
           <ion-label>Capacidad: {{ e.capacidad }}</ion-label>
           <ion-label>Anotados: {{ e.anotados }}</ion-label>
+          <ion-button @click="agregarClase">Ver inscriptos</ion-button>
+          <ion-button @click="agregarClase">Editar</ion-button>
+          <ion-button @click="agregarClase">Borrar</ion-button>
         </ion-item>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">

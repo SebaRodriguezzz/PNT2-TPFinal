@@ -66,7 +66,10 @@ export default {
             <span v-if="!e.showPassword">********</span>
             <span v-else>{{ e.password }}</span>
           </ion-label>
+          <ion-button @click="agregarClase">Editar</ion-button>
+          <ion-button @click="agregarClase">Borrar</ion-button>
           <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>
+      
         </ion-item>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">

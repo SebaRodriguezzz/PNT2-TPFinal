@@ -33,6 +33,7 @@ export const loginStore = defineStore('login', {
                     this.usuario.email = usuario.email;
                     this.usuario.password = usuario.password;
                     this.usuario.id = decryptedToken.id;
+                    this.usuario.plan = decryptedToken.plan;
 
                     localStorage.setItem('usuario', JSON.stringify(
                         { email: usuario.email, token: datos.data.token }))
@@ -77,13 +78,16 @@ export const loginStore = defineStore('login', {
             }
         },
         async insicribirseAClase(idClase) {
-            try {
+        
             console.log("Hasta aca va bien " +idClase + this.usuario.id)
-            const datos = await axios.post("http://localhost:3000/clases/agregar/:"+idClase,this.usuario);
-            } catch (e) {
-                console.log(e);
-            }
+            const datos = await axios.post("http://localhost:3000/clases/agregar/"+idClase,this.usuario);
+           
         },
+
+        suscritoAClase(idClase){
+        const datos = axios.get("http://localhost:3000/clase/:"+idClase,this.usuario.id)
+        return datos.data
+        }
         
 
     }

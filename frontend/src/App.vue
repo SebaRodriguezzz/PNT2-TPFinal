@@ -36,7 +36,6 @@ export default {
         <RouterLink class="custom-button" to="/admin/clases" v-if="estaLogeado && esAdmin">Clases</RouterLink>
         <RouterLink class="custom-button" to="/rutinas" v-if="estaLogeado && (esAdmin || esProfe) ">Rutinas</RouterLink>
         <RouterLink class="custom-button" to="/alumno/inicio" v-if="estaLogeado && esAlumno">Vista de alumno</RouterLink>
-        <RouterLink class="custom-button" to="/profe/inicio" v-if="estaLogeado && esProfe">Rutinas</RouterLink>
         <RouterLink class="custom-button" to="/profe/alumnos" v-if="estaLogeado && esProfe">Alumnos a cargo</RouterLink>
         <RouterLink class="custom-button" to="/perfil" v-if="estaLogeado">Perfil</RouterLink>
         <RouterLink class="custom-button" to="/alumno/clases" v-if="estaLogeado && (esAlumnoPlatino || esAlumnoOro)">Clases</RouterLink>
@@ -44,6 +43,7 @@ export default {
       
       </div>
       <div class="user-info">User: {{ this.usuario.email }}</div>
+      <div v-if="estaLogeado && !esProfe && !esAdmin" class="user-info">PLAN: {{ this.usuario.plan }}</div>
       <ion-button class="custom-logout" fill="clear" @click="logoutForm" v-if="estaLogeado">Logout</ion-button>
       
     </ion-header>

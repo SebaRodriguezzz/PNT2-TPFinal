@@ -8,8 +8,8 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const {insicribirseAClase,addObject, cargarDatos,agregarUsuario } = store;
-    return {insicribirseAClase,addObject, cargarDatos,agregarUsuario, estaLogeado };
+    const {suscritoAClase,insicribirseAClase,addObject, cargarDatos,agregarUsuario } = store;
+    return {suscritoAClase,insicribirseAClase,addObject, cargarDatos,agregarUsuario, estaLogeado };
   },
   data() {
     return {
@@ -39,16 +39,25 @@ export default {
             try {
                 await this.insicribirseAClase(idClase);
                 alert("Se agrego correctamente")
-                await loadData()
                 this.$router.push("/")
 
             }
-            catch (e) {
-                console.log(e)
+            catch (ex) {
+              alert("Hola")
+                alert(ex)
             }
 
 
         },
+
+        suscritoAClase(idClase){
+        const claseEncontrada = this.suscritoAClase(idClase)
+        if(claseEncontrada){
+          return false
+        }
+        return true
+        }
+        
 
 
   }
@@ -71,6 +80,7 @@ export default {
           <ion-label>Horario: {{ e.horario }}</ion-label>
           <ion-label>Capacidad: {{ e.capacidad }}</ion-label>
           <ion-label>Anotados: {{ e.anotados }}</ion-label>
+          <ion-button v-if="suscritoAClase(e.id)" @click="desuscribirse(e.id)">Desuscribirse</ion-button>
           <ion-button @click="inscribirse(e.id)">Incribirse</ion-button>
     
         </ion-item>
