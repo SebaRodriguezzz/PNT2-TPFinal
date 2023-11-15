@@ -39,7 +39,8 @@ export default {
             try {
                 await this.insicribirseAClase(idClase);
                 alert("Se agrego correctamente")
-                this.$router.push("/")
+                await this.loadData()
+                this.$router.push("/alumno/clases")
 
             }
             catch (ex) {
