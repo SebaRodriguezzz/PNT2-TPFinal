@@ -28,7 +28,7 @@ const users = [
 const clases = [
   {nombre:'Salsa',nombreProfe:'Claudio', horario: 1600, capacidad: 20, anotados:0, id:1},
   {nombre:'Bachata',nombreProfe:'Pepito', horario: 1700,capacidad: 20, anotados:0, id:2},
-  {nombre:'Tango',nombreProfe:'Juan', horario: 1500,capacidad: 20, anotados:0, id:3}
+  {nombre:'Tango',nombreProfe:'Juan', horario: 1500,capacidad: 5, anotados:0, id:3}
 ]
 
 const rutinas = [ {nombre:"Torso-Pierna" , nombreAlumno:"Pepe" , nivel:"Basico"}]
@@ -92,6 +92,13 @@ app.get('/rutinas', (req, res) => {
   res.json(listaRutinas)
 }) 
 
+app.get('/clase/:id', (req, res) => {
+  const idClase = req.params.id
+  const idUsuario = req.body
+  const claseUsuario = usuariosInscriptos.filter(u=>u.idClase==idClase&&u.idUsuario==idUsuario)
+  res.json(claseUsuario[0])
+})
+
 
 app.post('/usuarios/agregar',(req,res) =>{
   console.log(req.body);
@@ -139,7 +146,7 @@ app.post('/clases/agregar/:id',(req,res) =>{
     //busco la clase
     const listaClases = clases.filter(c => c.id == idClase)
 
-    const usuarioInscripto = usuariosInscriptos.filter(u=>u.claseId==idClase&&u.usuarioId==usuario.id)
+    const usuarioInscripto = usuariosInscriptos.filter(u=>u.idClase==idClase&&u.idUsuario==usuario.id)
     if(listaClases[0].anotados < listaClases[0].capacidad && usuarioInscripto[0] == null) {
       console.log("Pusheamos el usuario a la clase")
       console.log(claseYusuario.idClase)
@@ -147,10 +154,13 @@ app.post('/clases/agregar/:id',(req,res) =>{
       console.log(usuariosInscriptos[0].idUsuario + "Esta bien el id")
       listaClases[0].anotados++
       console.log(listaClases[0].anotados)
-
+      res.status(200).json({message:'bien'})
     }
+    else{
+      throw new ErrorCartel("Daaaaaaaaaale");
+    }
+ 
   
-
   } else {
     res.status(400).json({message:'error'})
   }
