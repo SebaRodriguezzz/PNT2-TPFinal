@@ -85,11 +85,14 @@ export default {
         <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email" required></ion-input>
         <ion-input class="input" v-model="user.password" placeholder="Contraseña" type="password" required></ion-input>
         <ion-input class="input" v-model="user.inicio" placeholder="Inicio" type="date" required></ion-input>
-        <ion-select class="input custom-select" v-model="user.plan" placeholder="Seleccionar plan" required>
-          <ion-select-option value="Basico">Basico</ion-select-option>
-          <ion-select-option value="Platino">Platino</ion-select-option>
-          <ion-select-option value="Oro">Oro</ion-select-option>
-        </ion-select>
+        <ion-item>
+          <ion-input placeholder="Seleccionar plan"></ion-input>
+          <ion-select class="input custom-select" v-model="user.plan" placeholder="Seleccionar plan" required>
+            <ion-select-option value="Basico">Basico</ion-select-option>
+            <ion-select-option value="Platino">Platino</ion-select-option>
+            <ion-select-option value="Oro">Oro</ion-select-option>
+          </ion-select>
+        </ion-item>
         <ion-button @click="addUser">Agregar</ion-button>
       </div>
       <br>
