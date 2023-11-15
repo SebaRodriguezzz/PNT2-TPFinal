@@ -64,17 +64,15 @@ export default {
         </ion-col>
       </ion-row>
 
-      <!-- Imagen destacada del gimnasio -->
       <ion-row justify-content-center align-items-center class="ion-text-center mt-4">
         <ion-col size="12">
           <ion-img src="https://www.sellingmybusiness.co.uk/images/1920x400/0x0-0x0/selling-a-business/gym-banner.jpg"></ion-img>
         </ion-col>
       </ion-row>
 
-      <!-- Información sobre el gimnasio -->
       <ion-row class="mt-4">
         <ion-col size="12">
-          <h2>Nuestro Gimnasio</h2>
+          <h2><strong>Nuestro Gimnasio</strong></h2>
           <p>
             En nuestro gimnasio, nos dedicamos a proporcionar un ambiente motivador
             y saludable para alcanzar tus objetivos de fitness. Contamos con instalaciones
@@ -84,31 +82,39 @@ export default {
         </ion-col>
       </ion-row>
 
-      <!-- Características del gimnasio -->
       <ion-row class="ion-justify-content-around mt-4">
         <ion-col size="12" size-md="4">
-          <h3>Equipamiento Moderno</h3>
+          <h3><strong>Equipamiento Moderno</strong></h3>
           <p>Nuestro gimnasio está equipado con lo último en tecnología fitness para brindarte la mejor experiencia de
             entrenamiento.</p>
         </ion-col>
         <ion-col size="12" size-md="4">
-          <h3>Clases Variadas</h3>
+          <h3><strong>Clases Variadas</strong></h3>
           <p>Ofrecemos una variedad de clases, desde yoga hasta entrenamiento de alta intensidad, para satisfacer tus
             preferencias y metas.</p>
         </ion-col>
         <ion-col size="12" size-md="4">
-          <h3>Entrenadores Expertos</h3>
+          <h3><strong>Entrenadores Expertos</strong></h3>
           <p>Nuestro equipo de entrenadores altamente calificados está aquí para guiarte y motivarte en tu viaje hacia un
             estilo de vida más saludable.</p>
         </ion-col>
       </ion-row>
 
-      <!-- Llamada a la acción -->
       <ion-row justify-content-center align-items-center class="ion-text-center mt-4">
         <ion-col size="12">
-          <ion-button expand="full" size="large">¡Comienza tu Viaje Fitness Ahora!</ion-button>
+          <ion-img src="https://cdn.kingsbox.com/assets/media/landing-categories/home-gym-1627327264-2.jpg"></ion-img>
         </ion-col>
       </ion-row>
+
+      <ion-row justify-content-center align-items-center class="ion-text-center mt-4">
+          <ion-col size="12">
+            <div>
+              <router-link to="/login">
+                <ion-button expand="full" size="large">¡Comienza tu Viaje Fitness Ahora!</ion-button>
+              </router-link>
+            </div>
+          </ion-col>
+        </ion-row>
 
     </ion-content>
 
