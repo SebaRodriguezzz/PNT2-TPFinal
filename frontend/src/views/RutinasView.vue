@@ -35,7 +35,7 @@ export default {
       console.log("Hasta aca perfecto")
       await this.addObject(this.rutina,"rutinas");
       alert("Se agrego correctamente")
-      await loadData()
+      await this.loadData()
       this.$router.push("/")
 
     },

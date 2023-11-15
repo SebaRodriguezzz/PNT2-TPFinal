@@ -39,7 +39,7 @@ export default {
     async agregarClase() {
       await this.addObject(this.clase,"clases");
       alert("Se agrego correctamente")
-      await loadData()
+      await this.loadData()
       this.$router.push("/")
 
     },

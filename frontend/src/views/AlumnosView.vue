@@ -35,7 +35,7 @@ export default {
       console.log(this.user.nombre)
       await this.agregarUsuario(this.user);
       alert("Se agrego correctamente")
-      await loadData()
+      await this.loadData()
       this.$router.push("/")
 
     },
