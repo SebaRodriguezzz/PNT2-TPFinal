@@ -36,7 +36,7 @@ export default {
       await this.addObject(this.rutina,"rutinas");
       alert("Se agrego correctamente")
       await this.loadData()
-      this.$router.push("/")
+      this.$router.push("/rutinas")
 
     },
     mostrarFormulario() {

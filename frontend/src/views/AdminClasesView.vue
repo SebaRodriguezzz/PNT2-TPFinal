@@ -40,7 +40,7 @@ export default {
       await this.addObject(this.clase,"clases");
       alert("Se agrego correctamente")
       await this.loadData()
-      this.$router.push("/")
+      this.$router.push("/admin/clases")
 
     },
     mostrarFormulario() {
