@@ -77,10 +77,16 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
-        async insicribirseAClase(idClase) {
+        async insicribirseAClase(idClase, usuario) {
         
             console.log("Hasta aca va bien " +idClase + this.usuario.id)
             const datos = await axios.post("http://localhost:3000/clases/agregar/"+idClase,this.usuario);
+           
+        },
+        async desuscribirseAClase(idClase) {
+        
+            console.log("desuscribirse " +idClase + this.usuario.id)
+            const datos = await axios.delete("http://localhost:3000/clases/desuscribir/"+idClase, this.usuario);
            
         },
 

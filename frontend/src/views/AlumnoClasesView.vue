@@ -8,8 +8,8 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const {suscritoAClase,insicribirseAClase,addObject, cargarDatos,agregarUsuario } = store;
-    return {suscritoAClase,insicribirseAClase,addObject, cargarDatos,agregarUsuario, estaLogeado };
+    const {suscritoAClase,insicribirseAClase, desuscribirseAClase,addObject, cargarDatos,agregarUsuario } = store;
+    return {suscritoAClase,insicribirseAClase, desuscribirseAClase,addObject, cargarDatos,agregarUsuario, estaLogeado };
   },
   data() {
     return {
@@ -37,7 +37,7 @@ export default {
   
         async inscribirse(idClase) {
             try {
-                await this.insicribirseAClase(idClase);
+                await this.insicribirseAClase(idClase, this.usuario);
                 alert("Se agrego correctamente")
                 await this.loadData()
                 this.$router.push("/alumno/clases")
@@ -49,6 +49,19 @@ export default {
             }
 
 
+        },
+
+        async desuscribirseAClase(idClase) {
+            try {
+                await this.desuscribirseAClase(idClase, this.usuario);
+                alert("Se desuscribió correctamente")
+                await this.loadData()
+                this.$router.push("/alumno/clases")
+            }
+            catch (ex) {
+              alert("Error al desuscribirse!")
+                alert(ex)
+            }
         },
 
         suscritoAClase(idClase){
@@ -81,7 +94,7 @@ export default {
           <ion-label>Horario: {{ e.horario }}</ion-label>
           <ion-label>Capacidad: {{ e.capacidad }}</ion-label>
           <ion-label>Anotados: {{ e.anotados }}</ion-label>
-          <ion-button v-if="suscritoAClase(e.id)" @click="desuscribirse(e.id)">Desuscribirse</ion-button>
+          <ion-button @click="desuscribirseAClase(e.id)">Desuscribirse</ion-button>
           <ion-button @click="inscribirse(e.id)">Incribirse</ion-button>
     
         </ion-item>
