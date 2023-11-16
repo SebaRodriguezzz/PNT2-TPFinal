@@ -239,7 +239,6 @@ app.put('/lista/:id', (req,res) =>{
   // falta manejo de errores
   // res.status(404).json({message:'error'})
 })
-
 app.put('/alumnos/:id', (req, res) => {
   const userId = parseInt(req.params.id);
   const { email, password, rol, plan } = req.body;
