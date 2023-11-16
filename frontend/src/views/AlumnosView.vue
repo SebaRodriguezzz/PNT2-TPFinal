@@ -62,6 +62,7 @@ export default {
         <ion-button @click="mostrarFormulario">Agregar Alumno</ion-button><br><br>
 
         <ion-item v-for="e in lista" :key="e.id">
+          <ion-label>Nombre: {{ e.nombre }}</ion-label>
           <ion-label>Email: {{ e.email }}</ion-label>
           <ion-label>
             Password:

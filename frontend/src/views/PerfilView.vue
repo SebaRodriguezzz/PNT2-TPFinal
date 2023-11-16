@@ -65,6 +65,8 @@ export default {
           <div class="login-text">Modificar email</div>
           <ion-input class="input" placeholder="Ingrese email actual" type="email"></ion-input>
           <ion-input class="input" v-model="usuario.nuevoEmail" placeholder="Ingrese nuevo email" type="email"></ion-input>
+          <ion-button @click="modificarEmail">Agregar</ion-button>
+
         </div>
       </div>
 
