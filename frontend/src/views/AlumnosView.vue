@@ -8,15 +8,18 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const { cargarDatos,agregarUsuario } = store;
-    return { cargarDatos,agregarUsuario, estaLogeado };
+    const { cargarDatos,agregarUsuario, editarUsuario } = store;
+    return { cargarDatos,agregarUsuario, editarUsuario, estaLogeado };
   },
   data() {
     return {
       user: { rol: "alumno"},
       lista:[],
       mostrarFormularioFlag: false, // Inicialmente oculto
-      showPassword: false
+      showPassword: false,
+      editMode: false, // Bandera para saber si estamos en modo de edición
+      editingUser: {}, // Almacena los datos del usuario que está siendo editado
+
     }
   },
   mounted() {
@@ -44,6 +47,28 @@ export default {
     },
     mostrarContraseña(item) {
       item.showPassword = !item.showPassword;
+    },
+    editUser(user) {
+      this.editingUser = { ...user }; // Almacena una copia del usuario seleccionado para edición
+      this.user = { ...user }; // Rellena el formulario con los datos del usuario
+      this.editMode = true; // Activa el modo de edición
+      this.mostrarFormulario(); // Muestra el formulario flotante
+    },
+    cancelEdit() {
+      // Cerrar formulario y limpiar datos de edición
+      this.mostrarFormularioFlag = false; // Ocultar el formulario flotante
+      this.editingUser = {}; // Limpiar datos de edición
+      this.editMode = false; // Desactivar modo de edición
+
+    },
+    async updateUser() {
+      await this.editarUsuario(this.editingUser.id, this.user);
+      await this.loadData()
+      alert("Se edito correctamente")
+      this.$router.push("/alumnos")
+      this.editingUser = {};
+      this.editMode = false;
+      this.mostrarFormulario();
     }
 
   }
@@ -71,14 +96,14 @@ export default {
           <ion-label>Plan: {{ e.plan }}</ion-label>
           <ion-label>Rutina: {{ e.nombreRutina }}</ion-label>
           <ion-label>Tipo de Rutina: {{ e.tipoRutina }}</ion-label>
-          <ion-button @click="gd" >Editar</ion-button>
+          <ion-button @click="editUser(e)" >Editar</ion-button>
           <ion-button >Borrar</ion-button>
           <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>
         </ion-item>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">
-        <button @click="mostrarFormulario" class="close-button">X</button>
-        <div class="login-text">Agregar alumno</div>
+        <button @click="cancelEdit" class="close-button">X</button>
+        <div class="login-text">{{ editMode ? 'Editar alumno' : 'Agregar alumno' }}</div>
         <ion-input class="input" v-model="user.nombre" placeholder="Nombre" type="text" required></ion-input>
         <ion-input class="input" v-model="user.apellido" placeholder="Apellido" type="text" required></ion-input>
         <ion-input class="input" v-model="user.dni" placeholder="DNI" type="text" required></ion-input>
@@ -94,7 +119,7 @@ export default {
         </ion-select>
         </ion-item>     No quería andar -->
         
-        <ion-button @click="addUser">Agregar</ion-button>
+        <ion-button @click="editMode ? updateUser() : addUser">{{ editMode ? 'Guardar cambios' : 'Agregar' }}</ion-button>
       </div>
       <br>
 

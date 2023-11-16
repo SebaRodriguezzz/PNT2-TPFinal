@@ -215,6 +215,38 @@ app.put('/lista/:id', (req,res) =>{
     // res.status(404).json({message:'error'})
 })
 
+app.put('/lista/:id', (req,res) =>{
+  //console.log(req.body);
+  //console.log(req.params.id);
+  const index = lista.findIndex(e=>e.id==req.params.id);
+  lista[index]=req.body
+  res.status(200).json({message:'ok'})
+  // falta manejo de errores
+  // res.status(404).json({message:'error'})
+})
+
+app.put('/alumnos/:id', (req, res) => {
+  const userId = parseInt(req.params.id);
+  const { email, password, rol, plan } = req.body;
+
+  const userIndex = users.findIndex(user => user.id === userId);
+
+  if (userIndex === -1) {
+    return res.status(404).json({ message: 'Usuario no encontrado' });
+  }
+
+  // Actualizar los campos del usuario encontrado
+  users[userIndex] = {
+    ...users[userIndex],
+    email: email || users[userIndex].email,
+    password: password || users[userIndex].password,
+    rol: rol || users[userIndex].rol,
+    plan: plan || users[userIndex].plan,
+    // ... otros campos que desees actualizar ...
+  };
+
+  return res.status(200).json(users[userIndex]);
+});
 const PORT = 3000
 const server = app.listen(PORT, () => console.log(`Servidor express escuchando en http://localhost:${PORT}`))
 server.on('error', error => console.log(`Error en servidor: ${error.message}`))
