@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      user: {rol : "alumno"},
+      user: { rol: "alumno"},
       lista:[],
       mostrarFormularioFlag: false, // Inicialmente oculto
       showPassword: false
@@ -32,7 +32,7 @@ export default {
       }
     },
     async addUser() {
-      console.log(this.user.nombre)
+      console.log('User object:', this.user);
       await this.agregarUsuario(this.user);
       alert("Se agrego correctamente")
       await this.loadData()
@@ -85,14 +85,15 @@ export default {
         <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email" required></ion-input>
         <ion-input class="input" v-model="user.password" placeholder="Contraseña" type="password" required></ion-input>
         <ion-input class="input" v-model="user.inicio" placeholder="Inicio" type="date" required></ion-input>
-        <ion-item>
-          <ion-input placeholder="Seleccionar plan"></ion-input>
+        <ion-input class="input custom-select" v-model="user.plan" placeholder="Seleccionar plan" required></ion-input>
+        <!--<ion-item>
           <ion-select class="input custom-select" v-model="user.plan" placeholder="Seleccionar plan" required>
-            <ion-select-option value="Basico">Basico</ion-select-option>
-            <ion-select-option value="Platino">Platino</ion-select-option>
-            <ion-select-option value="Oro">Oro</ion-select-option>
-          </ion-select>
-        </ion-item>
+          <ion-select-option value="Basico">Basico</ion-select-option>
+          <ion-select-option value="Platino">Platino</ion-select-option>
+          <ion-select-option value="Oro">Oro</ion-select-option>
+        </ion-select>
+        </ion-item>     No quería andar -->
+        
         <ion-button @click="addUser">Agregar</ion-button>
       </div>
       <br>
