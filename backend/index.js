@@ -92,12 +92,12 @@ app.get('/rutinas', (req, res) => {
   res.json(listaRutinas)
 }) 
 
-app.get('/clase/:id', (req, res) => {
-  const idClase = req.params.id
-  const idUsuario = req.body
-  const claseUsuario = usuariosInscriptos.filter(u=>u.idClase==idClase&&u.idUsuario==idUsuario)
-  res.json(claseUsuario[0])
-})
+app.get('/admin/clases/:id', (req, res) => {
+  const idClase = req.params.id;
+  const usuariosDeClase = usuariosInscriptos.filter(usuario => usuario.idClase === idClase);
+  res.json(usuariosDeClase);
+});
+
 
 
 app.post('/usuarios/agregar',(req,res) =>{
