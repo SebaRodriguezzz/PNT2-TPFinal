@@ -8,8 +8,8 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const {agregarRutina, cargarDatos,agregarUsuario } = store;
-    return {agregarRutina, cargarDatos,agregarUsuario, estaLogeado };
+    const {cargarDatosUsuarios,addObject,agregarRutina, cargarDatos,agregarUsuario } = store;
+    return {cargarDatosUsuarios,addObject,agregarRutina, cargarDatos,agregarUsuario, estaLogeado };
   },
   data() {
     return {
@@ -35,6 +35,7 @@ export default {
       console.log("Hasta aca perfecto")
       await this.addObject(this.rutina,"rutinas");
       alert("Se agrego correctamente")
+     
       await this.loadData()
       this.$router.push("/rutinas")
 
@@ -70,10 +71,10 @@ export default {
         <button @click="mostrarFormulario" class="close-button">X</button>
         <div class="login-text">Agregar rutina </div>
         <ion-input class="input" v-model="rutina.nombre" placeholder="Nombre Rutina" type="text" required></ion-input>
-        <ion-input class="input" v-model="rutina.alumno" placeholder="Alumno" type="text" required></ion-input>
+        <ion-input class="input" v-model="rutina.nombreAlumno" placeholder="Alumno" type="text" required></ion-input>
         <ion-input class="input" v-model="rutina.nivel" placeholder="Nivel" type="text" required></ion-input>
 
-        <ion-button @click="addUser">Agregar</ion-button>
+        <ion-button @click="addRutina">Agregar</ion-button>
       </div>
       <br>
 

@@ -1,10 +1,10 @@
 <script>
-import {IonList,IonPage,IonContent,IonInput,IonButton} from '@ionic/vue'
+import {IonItem,IonList,IonPage,IonContent,IonInput,IonButton} from '@ionic/vue'
 import { storeToRefs } from "pinia";
 import { loginStore } from "../stores/userStore"
 
 export default {
-  components: {IonList,IonPage,IonContent,IonInput,IonButton},
+  components: {IonItem,IonList,IonPage,IonContent,IonInput,IonButton},
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      user: { rol: "alumno"},
+      user: {rol : "alumno", plan:""},
       lista:[],
       mostrarFormularioFlag: false, // Inicialmente oculto
       showPassword: false,
@@ -23,10 +23,10 @@ export default {
     }
   },
   mounted() {
-    this.loadData()
+    this.cargarDatosUsuarios()
   },
   methods: {
-    async loadData() {
+    async cargarDatosUsuarios() {
       try {
         this.lista = await this.cargarDatos("alumnos")
       } catch(e) {
@@ -35,10 +35,10 @@ export default {
       }
     },
     async addUser() {
-      console.log('User object:', this.user);
+      console.log(this.user.nombre)
       await this.agregarUsuario(this.user);
       alert("Se agrego correctamente")
-      await this.loadData()
+      await this.cargarDatosUsuarios()
       this.$router.push("/alumnos")
 
     },
@@ -87,6 +87,7 @@ export default {
         <ion-button @click="mostrarFormulario">Agregar Alumno</ion-button><br><br>
 
         <ion-item v-for="e in lista" :key="e.id">
+          <ion-label>Nombre: {{ e.nombre }}</ion-label>
           <ion-label>Email: {{ e.email }}</ion-label>
           <ion-label>
             Password:
@@ -110,8 +111,8 @@ export default {
         <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email" required></ion-input>
         <ion-input class="input" v-model="user.password" placeholder="Contraseña" type="password" required></ion-input>
         <ion-input class="input" v-model="user.inicio" placeholder="Inicio" type="date" required></ion-input>
-        <ion-input class="input custom-select" v-model="user.plan" placeholder="Seleccionar plan" required></ion-input>
-        <!--<ion-item>
+        <ion-item>
+          <ion-input placeholder="Seleccionar plan"></ion-input>
           <ion-select class="input custom-select" v-model="user.plan" placeholder="Seleccionar plan" required>
           <ion-select-option value="Basico">Basico</ion-select-option>
           <ion-select-option value="Platino">Platino</ion-select-option>

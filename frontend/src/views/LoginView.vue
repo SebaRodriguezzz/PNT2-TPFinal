@@ -6,9 +6,13 @@ import { loginStore } from "../stores/userStore"
 export default {
   components: {IonPage,IonContent,IonInput,IonButton},
   setup() {
-    const store = loginStore();
+    const store = loginStore(); //obligatorio
+   //Esto para state
     const { estaLogeado } = storeToRefs(store);
+
+    //Esto para metodo
     const { login } = store;
+
     return { login, estaLogeado };
   },
   data() {
@@ -18,7 +22,6 @@ export default {
   },
   methods: {
     async loginForm() {
-      console.log(this.user.email);
       await this.login(this.user);
       if(this.estaLogeado) {
         this.$router.push("/")
