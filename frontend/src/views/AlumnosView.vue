@@ -1,10 +1,10 @@
 <script>
-import {IonList,IonPage,IonContent,IonInput,IonButton} from '@ionic/vue'
+import {IonItem,IonList,IonPage,IonContent,IonInput,IonButton} from '@ionic/vue'
 import { storeToRefs } from "pinia";
 import { loginStore } from "../stores/userStore"
 
 export default {
-  components: {IonList,IonPage,IonContent,IonInput,IonButton},
+  components: {IonItem,IonList,IonPage,IonContent,IonInput,IonButton},
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
@@ -13,17 +13,17 @@ export default {
   },
   data() {
     return {
-      user: {rol : "alumno"},
+      user: {rol : "alumno", plan:""},
       lista:[],
       mostrarFormularioFlag: false, // Inicialmente oculto
       showPassword: false
     }
   },
   mounted() {
-    this.loadData()
+    this.cargarDatosUsuarios()
   },
   methods: {
-    async loadData() {
+    async cargarDatosUsuarios() {
       try {
         this.lista = await this.cargarDatos("alumnos")
       } catch(e) {
@@ -35,7 +35,7 @@ export default {
       console.log(this.user.nombre)
       await this.agregarUsuario(this.user);
       alert("Se agrego correctamente")
-      await this.loadData()
+      await this.cargarDatosUsuarios()
       this.$router.push("/alumnos")
 
     },
