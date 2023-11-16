@@ -8,8 +8,8 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const {addObject, cargarDatos,agregarUsuario } = store;
-    return {addObject, cargarDatos,agregarUsuario, estaLogeado };
+    const {addObject, cargarDatos,verInscriptos,agregarUsuario } = store;
+    return {addObject, cargarDatos,verInscriptos,agregarUsuario, estaLogeado };
   },
   data() {
     return {
@@ -49,6 +49,9 @@ export default {
     },
     mostrarContraseña(item) {
       item.showPassword = !item.showPassword;
+    },
+    verInscriptos(clase) {
+      this.$router.push("/admin/clases/"+clase)
     }
 
   }
@@ -73,7 +76,7 @@ export default {
           <ion-label>Horario: {{ e.horario }}</ion-label>
           <ion-label>Capacidad: {{ e.capacidad }}</ion-label>
           <ion-label>Anotados: {{ e.anotados }}</ion-label>
-          <ion-button @click="agregarClase">Ver inscriptos</ion-button>
+          <ion-button @click="verInscriptos(e.id)">Ver inscriptos</ion-button>
           <ion-button @click="agregarClase">Editar</ion-button>
           <ion-button @click="agregarClase">Borrar</ion-button>
         </ion-item>

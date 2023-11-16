@@ -92,12 +92,12 @@ app.get('/rutinas', (req, res) => {
   res.json(listaRutinas)
 }) 
 
-app.get('/clase/:id', (req, res) => {
-  const idClase = req.params.id
-  const idUsuario = req.body
-  const claseUsuario = usuariosInscriptos.filter(u=>u.idClase==idClase&&u.idUsuario==idUsuario)
-  res.json(claseUsuario[0])
-})
+app.get('/admin/clases/:id', (req, res) => {
+  const idClase = req.params.id;
+  const usuariosDeClase = usuariosInscriptos.filter(usuario => usuario.idClase === idClase);
+  res.json(usuariosDeClase);
+});
+
 
 
 app.post('/usuarios/agregar',(req,res) =>{
@@ -157,7 +157,7 @@ app.post('/clases/agregar/:id',(req,res) =>{
       res.status(200).json({message:'bien'})
     }
     else{
-      throw new ErrorCartel("Daaaaaaaaaale");
+      throw new Error("Daaaaaaaaaale");
     }
  
   
@@ -165,6 +165,27 @@ app.post('/clases/agregar/:id',(req,res) =>{
     res.status(400).json({message:'error'})
   }
 })
+
+app.delete('/clases/desuscribir/:id', (req, res) => {
+  const {id: idClase} = req.params
+  const usuario = req.body; // Supongamos que el id del usuario está en req.body.id
+  const listaClases = clases.filter(c => c.id == idClase)
+  console.log(usuariosInscriptos)
+  const usuarioIndex = usuariosInscriptos.filter(u=>u.idClase==idClase&&u.idUsuario==usuario.id)
+  
+  if (usuarioIndex !== -1 && listaClases[0].anotados > 0)  {
+    console.log(usuariosInscriptos)
+    usuariosInscriptos.splice(usuarioIndex, 1);
+    console.log(usuariosInscriptos)
+    listaClases[0].anotados--
+     // Elimina al usuario de la lista de inscritos en esa clase
+
+    res.status(200).json({ message: 'Usuario desuscrito correctamente' });
+  } else {
+    res.status(404).json({ message: 'Usuario no encontrado en esta clase' });
+  }
+});
+
 
 
 const lista = [{id:100,name:'Charly'},{id:200,name:'Jhon'}]

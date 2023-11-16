@@ -10,6 +10,7 @@ import AdminClases from '../views/AdminClasesView.vue'
 import VistaRutinas from '../views/RutinasView.vue'
 import VistaPerfil from '../views/PerfilView.vue'
 import VistaAlumnoClases from '../views/AlumnoClasesView.vue'
+import ClaseInscriptos from '../views/ClaseInscriptosView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -91,6 +92,11 @@ const router = createRouter({
       path: '/alumno/clases',
       name: 'vista alumno clases',
       component: VistaAlumnoClases,
+    },
+    { 
+      path: '/admin/clases/:id',
+      name: 'vista inscriptos clases',
+      component: ClaseInscriptos, 
     }
     
     
