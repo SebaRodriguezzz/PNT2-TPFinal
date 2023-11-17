@@ -127,17 +127,16 @@ app.post('/rutinas/agregar',(req,res) =>{
   if(req.body) {
     console.log(req.body)
     const rutina = req.body;
-    const rutinasExistentes = rutinas.filter(r=> r.nombreAlumno == rutina.nombreAlumno)
-    if(rutinasExistentes.length > 0) {
+    const rutinaExistente = rutinas.find(r=> r.nombreAlumno == rutina.nombreAlumno)
+    if(rutinaExistente != null) {
       throw new Error("La rutina ya esta repetida")
     }
     rutinas.push(rutina)
-    const alumnos = users.filter(u => rutina.nombreAlumno == u.nombre && u.rol =="alumno")
+    const alumno = users.find(u => rutina.nombreAlumno == u.nombre && u.rol =="alumno")
     //si el alumno existe le asignamos nombre de rutina y tipo rutina
-   if(alumnos.length > 0 ) {
-    const alumnoExistente = alumnos[0]
-    alumnoExistente.nombreRutina = rutina.nombre;
-    alumnoExistente.tipoRutina = rutina.nivel;
+   if(alumno != null ) {
+    alumno.nombreRutina = rutina.nombre;
+    alumno.tipoRutina = rutina.nivel;
    }
 
   
