@@ -44,6 +44,7 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
+       
 
         logout() {
             try {
@@ -54,7 +55,7 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
-        
+
         async agregarUsuario(usuario) {
             try {
             console.log("2da parte hecha")

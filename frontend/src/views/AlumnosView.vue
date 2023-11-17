@@ -29,8 +29,11 @@ export default {
     async cargarDatosUsuarios() {
       try {
         this.lista = await this.cargarDatos("alumnos")
+        console.log("Se cargo correctamente todoooo")
+          console.log(this.lista[this.lista.length-1])
+        
+        
       } catch(e) {
-        console.log(e);
         this.errorMessage = "Se produjo un error"
       }
     },
@@ -120,7 +123,7 @@ export default {
         </ion-select>
         </ion-item>     No quería andar -->
         
-        <ion-button @click="editMode ? updateUser() : addUser">{{ editMode ? 'Guardar cambios' : 'Agregar' }}</ion-button>
+        <ion-button @click="editMode ? updateUser() : addUser()">{{ editMode ? 'Guardar cambios' : 'Agregar' }}</ion-button>
       </div>
       <br>
 

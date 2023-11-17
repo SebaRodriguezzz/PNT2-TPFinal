@@ -2,6 +2,7 @@
 import {IonList,IonPage,IonContent,IonInput,IonButton} from '@ionic/vue'
 import { storeToRefs } from "pinia";
 import { loginStore } from "../stores/userStore"
+import vistaAlumnos from "./AlumnosView.vue"
 
 export default {
   components: {IonList,IonPage,IonContent,IonInput,IonButton},
@@ -35,7 +36,7 @@ export default {
       console.log("Hasta aca perfecto")
       await this.addObject(this.rutina,"rutinas");
       alert("Se agrego correctamente")
-     
+      await vistaAlumnos.methods.cargarDatosUsuarios.call(this);
       await this.loadData()
       this.$router.push("/rutinas")
 
