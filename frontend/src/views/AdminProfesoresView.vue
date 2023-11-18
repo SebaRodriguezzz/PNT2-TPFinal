@@ -8,8 +8,8 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const { cargarDatos,agregarUsuario } = store;
-    return { cargarDatos,agregarUsuario, estaLogeado };
+    const { eliminarObjeto,cargarDatos,agregarUsuario } = store;
+    return { eliminarObjeto,cargarDatos,agregarUsuario, estaLogeado };
   },
   data() {
     return {
@@ -45,6 +45,14 @@ export default {
     mostrarContraseña(item) {
       item.showPassword = !item.showPassword;
     }
+    ,
+    async eliminar(id) {
+      console.log("Pasa primer metodo")
+      await this.eliminarObjeto("profesores",id);
+      await this.loadData()
+      alert("Se eliminó correctamente el profe")
+      this.$router.push("/profes")
+    }
 
   }
 }
@@ -67,7 +75,7 @@ export default {
             <span v-else>{{ e.password }}</span>
           </ion-label>
           <ion-button @click="agregarClase">Editar</ion-button>
-          <ion-button @click="agregarClase">Borrar</ion-button>
+          <ion-button @click="eliminar(e.id)">Borrar</ion-button>
           <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>
       
         </ion-item>
