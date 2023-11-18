@@ -104,7 +104,7 @@ app.post('/usuarios/agregar',(req,res) =>{
   console.log(req.body);
   if(req.body) {
     const usuario = req.body;
-    usuario.id = String(parseInt(users[users.length - 1]?.id || 0) + 1) // ?. optional chaining
+    usuario.id = parseInt(users[users.length - 1]?.id || 0) + 1;
     users.push(usuario)
     res.status(200).json({message:'bien'})
   } else {
@@ -133,7 +133,7 @@ app.post('/rutinas/agregar',(req,res) =>{
     if(rutinaExistente != null) {
       throw new Error("La rutina ya esta repetida")
     }
-    rutina.id = String(parseInt(rutinas[rutinas.length - 1]?.id || 0) + 1) // ?. optional chaining
+    rutina.id = parseInt(rutinas[rutinas.length - 1]?.id || 0) + 1;
     rutinas.push(rutina)
     const alumno = users.find(u => rutina.nombreAlumno == u.nombre && u.rol =="alumno")
     //si el alumno existe le asignamos nombre de rutina y tipo rutina
@@ -344,26 +344,33 @@ app.put('/lista/:id', (req,res) =>{
 })
 app.put('/alumnos/:id', (req, res) => {
   const userId = parseInt(req.params.id);
-  const { email, password, rol, plan } = req.body;
-
   const userIndex = users.findIndex(user => user.id === userId);
 
   if (userIndex === -1) {
     return res.status(404).json({ message: 'Usuario no encontrado' });
   }
 
-  // Actualizar los campos del usuario encontrado
-  users[userIndex] = {
-    ...users[userIndex],
-    email: email || users[userIndex].email,
-    password: password || users[userIndex].password,
-    rol: rol || users[userIndex].rol,
-    plan: plan || users[userIndex].plan,
-    // ... otros campos que desees actualizar ...
-  };
+  users[userIndex] = { ...users[userIndex], ...req.body };
 
   return res.status(200).json(users[userIndex]);
 });
+
+
+app.put('/rutinas/:id', (req, res) => {
+  const rutinaId = parseInt(req.params.id);
+  const rutinaIndex = rutinas.findIndex(rutina => rutina.id === rutinaId);
+
+  if (rutinaIndex === -1) {
+    return res.status(404).json({ message: 'Rutina no encontrada' });
+  }
+
+  rutinas[rutinaIndex] = { ...rutinas[rutinaIndex], ...req.body };
+
+  return res.status(200).json(rutinas[rutinaIndex]);
+});
+
+
+
 const PORT = 3000
 const server = app.listen(PORT, () => console.log(`Servidor express escuchando en http://localhost:${PORT}`))
 server.on('error', error => console.log(`Error en servidor: ${error.message}`))
