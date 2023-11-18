@@ -35,8 +35,8 @@ export default {
         <RouterLink class="custom-button" to="/admin/profesores" v-if="estaLogeado && esAdmin">Profesores</RouterLink>
         <RouterLink class="custom-button" to="/admin/clases" v-if="estaLogeado && esAdmin">Clases</RouterLink>
         <RouterLink class="custom-button" to="/rutinas" v-if="estaLogeado && (esAdmin || esProfe) ">Rutinas</RouterLink>
-        <RouterLink class="custom-button" to="/alumno/inicio" v-if="estaLogeado && esAlumno">Vista de alumno</RouterLink>
-        <RouterLink class="custom-button" to="/profe/alumnos" v-if="estaLogeado && esProfe">Alumnos a cargo</RouterLink>
+        <RouterLink class="custom-button" to="/alumno/inicio" v-if="estaLogeado && esAlumno1">Vista de alumno</RouterLink>
+        <RouterLink class="custom-button" to="/profe/alumnos" v-if="estaLogeado && esProfe1">Alumnos a cargo</RouterLink>
         <RouterLink class="custom-button" to="/perfil" v-if="estaLogeado">Perfil</RouterLink>
         <RouterLink class="custom-button" to="/alumno/clases" v-if="estaLogeado && (esAlumnoPlatino || esAlumnoOro)">Clases</RouterLink>
         <RouterLink class="custom-button" to="/login" v-if="!estaLogeado">Login</RouterLink>
