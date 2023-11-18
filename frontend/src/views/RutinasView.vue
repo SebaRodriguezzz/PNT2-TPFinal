@@ -2,22 +2,24 @@
 import {IonList,IonPage,IonContent,IonInput,IonButton} from '@ionic/vue'
 import { storeToRefs } from "pinia";
 import { loginStore } from "../stores/userStore"
-import vistaAlumnos from "./AlumnosView.vue"
 
 export default {
   components: {IonList,IonPage,IonContent,IonInput,IonButton},
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const {eliminarObjeto,cargarDatosUsuarios,addObject,agregarRutina, cargarDatos,agregarUsuario } = store;
-    return {eliminarObjeto,cargarDatosUsuarios,addObject,agregarRutina, cargarDatos,agregarUsuario, estaLogeado };
+    const {eliminarObjeto,addObject,agregarRutina, cargarDatos,agregarUsuario, editarRutina } = store;
+    return {eliminarObjeto,addObject,agregarRutina, cargarDatos,agregarUsuario, estaLogeado, editarRutina };
   },
   data() {
     return {
       rutina: {},
       lista:[],
       mostrarFormularioFlag: false, // Inicialmente oculto
-      showPassword: false
+      showPassword: false,
+      editMode: false, // Bandera para saber si estamos en modo de edición
+      editingRoutine: {}, // Almacena los datos del usuario que está siendo editado
+
     }
   },
   mounted() {
@@ -35,9 +37,8 @@ export default {
     async addRutina() {
       console.log("Hasta aca perfecto")
       await this.addObject(this.rutina,"rutinas");
-      alert("Se agrego correctamente")
-      await vistaAlumnos.methods.cargarDatosUsuarios.call(this);
       await this.loadData()
+      alert("Se agrego correctamente")
       this.$router.push("/rutinas")
 
     },
@@ -52,6 +53,34 @@ export default {
       await this.loadData()
       this.$router.push("/rutinas")
 
+    },
+    editarRutina(rutina) {
+      console.log("Rutina recibida para edición:", rutina);
+      this.editingRoutine = { ...rutina }; // Almacena una copia del usuario seleccionado para edición
+      console.log("Rutina recibida para edición:", this.editingRoutine);
+      this.rutina = { ...rutina }; // Rellena el formulario con los datos del usuario
+      this.editMode = true; // Activa el modo de edición
+      this.mostrarFormulario(); // Muestra el formulario flotante
+    },
+    cancelEdit() {
+      // Cerrar formulario y limpiar datos de edición
+      this.mostrarFormularioFlag = false; // Ocultar el formulario flotante
+      this.editingRoutine = {}; // Limpiar datos de edición
+      this.editMode = false; // Desactivar modo de edición
+
+    },
+    async updateRutina() {
+      console.log(this.editingRoutine)
+      console.log(this.rutina)
+      await this.editarRutina(this.editingRoutine.id, this.rutina);
+      
+      await this.loadData()
+      console.log("estoy aca")
+      alert("Se edito correctamente")
+      this.$router.push("/rutinas")
+      this.editingRoutine = {};
+      this.editMode = false;
+      this.mostrarFormulario();
     }
     
   }
@@ -74,17 +103,17 @@ export default {
         <ion-label>Alumno: {{ e.nombreAlumno }}</ion-label>
         <ion-label>Nivel: {{ e.nivel }}</ion-label>
         <ion-button @click="eliminarRutina(e.id)">Eliminar</ion-button>
-        <ion-button @click="putData(e.id)">Modificar</ion-button>
+        <ion-button @click="editarRutina(e)">Modificar</ion-button>
       </ion-item>
   
       <div class="floating-form" v-if="mostrarFormularioFlag">
-        <button @click="mostrarFormulario" class="close-button">X</button>
-        <div class="login-text">Agregar rutina </div>
-        <ion-input class="input" v-model="rutina.nombre" placeholder="Nombre Rutina" type="text" required></ion-input>
+        <button @click="cancelEdit" class="close-button">X</button>
+        <div class="login-text">{{ editMode ? 'Editar rutina' : 'Agregar rutina' }}</div>
+        <ion-input class="input" v-model="rutina.nombre" placeholder="Nombre rutina" type="text" required></ion-input>
         <ion-input class="input" v-model="rutina.nombreAlumno" placeholder="Alumno" type="text" required></ion-input>
         <ion-input class="input" v-model="rutina.nivel" placeholder="Nivel" type="text" required></ion-input>
 
-        <ion-button @click="addRutina">Agregar</ion-button>
+        <ion-button @click="editMode ? updateRutina() : addRutina()">{{ editMode ? 'Guardar cambios' : 'Agregar' }}</ion-button>
       </div>
       <br>
 

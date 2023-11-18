@@ -72,6 +72,15 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
+        async editarRutina(id, rutina) {
+            try {
+            console.log("editando rutina")
+            const datos = await axios.put("http://localhost:3000/rutinas/"+id, rutina);
+            console.log(" rutina editada - user store")
+            } catch (e) {
+                console.log(e);
+            }
+        },
         async cargarDatos(objetos) {
             try {
             const response = await axios.get("http://localhost:3000/"+objetos);

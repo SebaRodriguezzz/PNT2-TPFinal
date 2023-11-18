@@ -65,7 +65,7 @@ export default {
     },
     async updateUser() {
       await this.editarUsuario(this.editingUser.id, this.user);
-      await this.cargarDatosUsuarios()
+      await this.loadData()
       alert("Se edito correctamente")
       this.$router.push("/alumnos")
       this.editingUser = {};
@@ -76,7 +76,7 @@ export default {
     async eliminar(id) {
       console.log("Pasa primer metodo")
       await this.eliminarObjeto("alumnos",id);
-      await this.cargarDatosUsuarios()
+      await this.loadData()
       alert("Se eliminó correctamente")
       this.$router.push("/alumnos")
     }
@@ -98,7 +98,7 @@ export default {
 
         <ion-item v-for="e in lista" :key="e.id">
           <ion-label>Id: {{ e.id }}</ion-label>
-          
+          <ion-label>Nombre: {{ e.nombre }} {{ e.apellido }}</ion-label>
           <ion-label>Email: {{ e.email }}</ion-label>
           <ion-label>
             Password:
