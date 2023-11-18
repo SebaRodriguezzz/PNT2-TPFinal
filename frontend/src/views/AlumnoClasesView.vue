@@ -60,7 +60,7 @@ export default {
             }
             catch (ex) {
               alert("Error al desuscribirse!")
-                alert(ex)
+             
             }
         },
 

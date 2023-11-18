@@ -8,8 +8,8 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const { cargarDatos,agregarUsuario, editarUsuario } = store;
-    return { cargarDatos,agregarUsuario, editarUsuario, estaLogeado };
+    const {eliminarObjeto, cargarDatos,agregarUsuario, editarUsuario } = store;
+    return {eliminarObjeto,cargarDatos,agregarUsuario, editarUsuario, estaLogeado };
   },
   data() {
     return {
@@ -29,8 +29,10 @@ export default {
     async loadData() {
       try {
         this.lista = await this.cargarDatos("alumnos")
+        console.log("Se cargo correctamente todoooo")
+
+
       } catch(e) {
-        console.log(e);
         this.errorMessage = "Se produjo un error"
       }
     },
@@ -63,12 +65,20 @@ export default {
     },
     async updateUser() {
       await this.editarUsuario(this.editingUser.id, this.user);
-      await this.loadData()
+      await this.cargarDatosUsuarios()
       alert("Se edito correctamente")
       this.$router.push("/alumnos")
       this.editingUser = {};
       this.editMode = false;
       this.mostrarFormulario();
+    }
+    ,
+    async eliminar(id) {
+      console.log("Pasa primer metodo")
+      await this.eliminarObjeto("alumnos",id);
+      await this.cargarDatosUsuarios()
+      alert("Se eliminó correctamente")
+      this.$router.push("/alumnos")
     }
 
   }
@@ -87,6 +97,8 @@ export default {
         <ion-button @click="mostrarFormulario">Agregar Alumno</ion-button><br><br>
 
         <ion-item v-for="e in lista" :key="e.id">
+          <ion-label>Id: {{ e.id }}</ion-label>
+          
           <ion-label>Email: {{ e.email }}</ion-label>
           <ion-label>
             Password:
@@ -97,7 +109,7 @@ export default {
           <ion-label>Rutina: {{ e.nombreRutina }}</ion-label>
           <ion-label>Tipo de Rutina: {{ e.tipoRutina }}</ion-label>
           <ion-button @click="editUser(e)" >Editar</ion-button>
-          <ion-button >Borrar</ion-button>
+          <ion-button @click="eliminar(e.id)">Borrar</ion-button>
           <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>
         </ion-item>
       <!-- Formulario flotante -->
@@ -119,7 +131,7 @@ export default {
         </ion-select>
         </ion-item>     No quería andar -->
         
-        <ion-button @click="editMode ? updateUser() : addUser">{{ editMode ? 'Guardar cambios' : 'Agregar' }}</ion-button>
+        <ion-button @click="editMode ? updateUser() : addUser()">{{ editMode ? 'Guardar cambios' : 'Agregar' }}</ion-button>
       </div>
       <br>
 

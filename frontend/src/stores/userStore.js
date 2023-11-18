@@ -44,6 +44,7 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
+       
 
         logout() {
             try {
@@ -54,6 +55,7 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
+
         async agregarUsuario(usuario) {
             try {
             console.log("2da parte hecha")
@@ -95,13 +97,22 @@ export const loginStore = defineStore('login', {
         
             console.log("desuscribirse " +idClase + this.usuario.id)
             const datos = await axios.delete("http://localhost:3000/clases/desuscribir/"+idClase, this.usuario);
+            
            
         },
 
         suscritoAClase(idClase){
-        const datos = axios.get("http://localhost:3000/clase/:"+idClase,this.usuario.id)
+        const datos = axios.get("http://localhost:3000/clase/"+idClase,this.usuario.id)
         return datos.data
-        }
+        },
+
+        async eliminarObjeto(objeto,id) {
+        console.log("Segunda parte esta bien" +objeto+id)
+        const datos = await axios.delete("http://localhost:3000/"+objeto+"/"+id);
+
+
+        },
+
         
 
     }

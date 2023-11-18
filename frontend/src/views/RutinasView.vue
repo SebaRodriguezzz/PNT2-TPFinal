@@ -2,14 +2,15 @@
 import {IonList,IonPage,IonContent,IonInput,IonButton} from '@ionic/vue'
 import { storeToRefs } from "pinia";
 import { loginStore } from "../stores/userStore"
+import vistaAlumnos from "./AlumnosView.vue"
 
 export default {
   components: {IonList,IonPage,IonContent,IonInput,IonButton},
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const {cargarDatosUsuarios,addObject,agregarRutina, cargarDatos,agregarUsuario } = store;
-    return {cargarDatosUsuarios,addObject,agregarRutina, cargarDatos,agregarUsuario, estaLogeado };
+    const {eliminarObjeto,cargarDatosUsuarios,addObject,agregarRutina, cargarDatos,agregarUsuario } = store;
+    return {eliminarObjeto,cargarDatosUsuarios,addObject,agregarRutina, cargarDatos,agregarUsuario, estaLogeado };
   },
   data() {
     return {
@@ -35,13 +36,22 @@ export default {
       console.log("Hasta aca perfecto")
       await this.addObject(this.rutina,"rutinas");
       alert("Se agrego correctamente")
-     
+      await vistaAlumnos.methods.cargarDatosUsuarios.call(this);
       await this.loadData()
       this.$router.push("/rutinas")
 
     },
     mostrarFormulario() {
       this.mostrarFormularioFlag = !this.mostrarFormularioFlag; // Mostrar el formulario al hacer clic
+    },
+    
+    async eliminarRutina(id) {
+      console.log("Hasta aca perfecto")
+      await this.eliminarObjeto("rutinas",id);
+      alert("Se elimno la rutina correctamente")
+      await this.loadData()
+      this.$router.push("/rutinas")
+
     }
     
   }
@@ -63,7 +73,7 @@ export default {
         <ion-label>Descripcion: {{ e.nombre }}</ion-label>
         <ion-label>Alumno: {{ e.nombreAlumno }}</ion-label>
         <ion-label>Nivel: {{ e.nivel }}</ion-label>
-        <ion-button @click="deleteData(e.id)">Eliminar</ion-button>
+        <ion-button @click="eliminarRutina(e.id)">Eliminar</ion-button>
         <ion-button @click="putData(e.id)">Modificar</ion-button>
       </ion-item>
   

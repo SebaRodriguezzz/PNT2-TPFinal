@@ -16,13 +16,13 @@ app.use(express.static('public'))
 // base de prueba en memoria
 
 const users = [
-  {email:'admin@test.com',password:'1234','rol':'admin',id: 4},
-  {email:'alumnooro@test.com',password:'1234','rol':'alumno',plan:'oro',id: 1},
-  {email:'alumnoba@test.com',password:'1234','rol':'alumno',plan:'basico',id: 2},
-  {email:'alumnopla@test.com',password:'1234','rol':'alumno',plan:'platino',id: 3},
-  {email:'admin2@test.com',password:'1234','rol':'admin'},
-  {email:'profe@test.com',password:'1234','rol':'profe'}, 
-   {email:'profe2@test.com',password:'1234','rol':'profe'}
+  {email:'admin@test.com',password:'1234','rol':'admin',id: 1},
+  {email:'alumnooro@test.com',password:'1234','rol':'alumno',plan:'oro',id: 2,clasesInscriptas:[1,2]},
+  {email:'alumnoba@test.com',password:'1234','rol':'alumno',id: 3,plan:'basico'},
+  {email:'alumnopla@test.com',password:'1234','rol':'alumno',id: 4,plan:'platino'},
+  {email:'admin2@test.com',password:'1234','rol':'admin', id: 5},
+  {email:'profe@test.com',password:'1234','rol':'profe', id: 6}, 
+   {email:'profe2@test.com',password:'1234','rol':'profe',id : 7}
 ]
 
 const clases = [
@@ -31,7 +31,7 @@ const clases = [
   {nombre:'Tango',nombreProfe:'Juan', horario: 1500,capacidad: 5, anotados:0, id:3}
 ]
 
-const rutinas = [ {nombre:"Torso-Pierna" , nombreAlumno:"Pepe" , nivel:"Basico"}]
+const rutinas = [ {nombre:"Torso-Pierna" , nombreAlumno:"Pepe" , nivel:"Basico", id:1}]
 
 const usuariosInscriptos = []
 
@@ -78,8 +78,8 @@ app.get('/alumnos', (req, res) => {
 })
 
 app.get('/profes', (req, res) => {
-  const listaUsuarios = users.filter(u => u.rol == "profe")
-  res.json(listaUsuarios)
+  const listaProfes = users.filter(u => u.rol == "profe")
+  res.json(listaProfes)
 })
 
 app.get('/clases', (req, res) => {
@@ -104,6 +104,7 @@ app.post('/usuarios/agregar',(req,res) =>{
   console.log(req.body);
   if(req.body) {
     const usuario = req.body;
+    usuario.id = String(parseInt(users[users.length - 1]?.id || 0) + 1) // ?. optional chaining
     users.push(usuario)
     res.status(200).json({message:'bien'})
   } else {
@@ -115,6 +116,7 @@ app.post('/clases/agregar',(req,res) =>{
   console.log(req.body);
   if(req.body) {
     const clase = req.body;
+    clase.id = String(parseInt(clases[clases.length - 1]?.id || 0) + 1) // ?. optional chaining
     clases.push(clase)
     res.status(200).json({message:'bien'})
   } else {
@@ -127,21 +129,18 @@ app.post('/rutinas/agregar',(req,res) =>{
   if(req.body) {
     console.log(req.body)
     const rutina = req.body;
-    const rutinasExistentes = rutinas.filter(r=> r.nombreAlumno == rutina.nombreAlumno)
-    if(rutinasExistentes.length > 0) {
+    const rutinaExistente = rutinas.find(r=> r.nombreAlumno == rutina.nombreAlumno)
+    if(rutinaExistente != null) {
       throw new Error("La rutina ya esta repetida")
     }
+    rutina.id = String(parseInt(rutinas[rutinas.length - 1]?.id || 0) + 1) // ?. optional chaining
     rutinas.push(rutina)
-    const alumnos = users.filter(u => rutina.nombreAlumno == u.nombre && u.rol =="alumno")
+    const alumno = users.find(u => rutina.nombreAlumno == u.nombre && u.rol =="alumno")
     //si el alumno existe le asignamos nombre de rutina y tipo rutina
-   if(alumnos.length > 0 ) {
-    const alumnoExistente = alumnos[0]
-    alumnoExistente.nombreRutina = rutina.nombre;
-    alumnoExistente.tipoRutina = rutina.nivel;
+   if(alumno != null ) {
+    alumno.nombreRutina = rutina.nombre;
+    alumno.tipoRutina = rutina.nivel;
    }
-
-  
-    
     res.status(200).json({message:'bien'})
   } else {
     res.status(400).json({message:'error'})
@@ -200,6 +199,110 @@ app.delete('/clases/desuscribir/:id', (req, res) => {
     res.status(404).json({ message: 'Usuario no encontrado en esta clase' });
   }
 });
+
+app.delete('/alumnos/:id', (req, res) => {
+  if (req.params) {
+    console.log("Tercera parte arranca bien")
+    const idAlumno = req.params.id;
+    const indexAlumno = users.findIndex(u => u.id == idAlumno && u.rol == "alumno")
+   
+    console.log("El index es : " +indexAlumno)
+    if (indexAlumno >= 0) {
+      const alumno = users.find(u => u.id == idAlumno && u.rol == "alumno")
+      users.splice(indexAlumno,1)
+      const idxRutinaABorrar = rutinas.findIndex(r => r.nombreAlumno == alumno.nombre)
+      if(idxRutinaABorrar > 0 ) {
+        rutinas.splice(idxRutinaABorrar,1)
+      }
+      res.status(200).json({ message: 'Alumno eliminado correctamente' });
+    }
+    else {
+      res.status(404).json({ message: 'Alumno no encontrado' });
+
+    }
+
+
+  } else {
+    res.status(400).json({ message: 'error' })
+
+  }
+
+}
+
+)
+
+app.delete('/profesores/:id', (req, res) => {
+  if (req.params) {
+    console.log("Hola profeeee")
+    const idProfe = req.params.id;
+    const indexProfe = users.findIndex(u => u.id == idProfe && u.rol == "profe")
+    if (indexProfe >= 0) {
+      users.splice(indexProfe,1)
+      res.status(200).json({ message: 'Profe eliminado correctamente' });
+    }
+    else {
+      res.status(404).json({ message: 'Alumno no encontrado' });
+
+    }
+
+
+  } else {
+    res.status(400).json({ message: 'error' })
+
+  }
+
+}
+
+)
+
+app.delete('/clases/:id', (req, res) => {
+  if (req.params) {
+    const idClase = req.params.id;
+    const indexClase = clases.findIndex(clase => clase.id == idClase)
+    if (indexClase >= 0) {
+      clases.splice(indexClase,1)
+      res.status(200).json({ message: 'Clase eliminado correctamente' });
+
+    }
+    else {
+      res.status(404).json({ message: 'Alumno no encontrado' });
+
+    }
+
+
+  } else {
+    res.status(400).json({ message: 'error' })
+
+  }
+
+}
+
+)
+
+
+app.delete('/rutinas/:id', (req, res) => {
+  if (req.params) {
+    const idRutina = req.params.id;
+    const indexRutina = rutinas.findIndex(r => r.id == idRutina)
+    if(indexRutina >= 0) {
+      rutinas.splice(indexRutina,1)
+      res.status(200).json({ message: 'Ruitina eliminada correctamente' });
+      
+    }
+    else {
+      res.status(404).json({ message: 'Rutina no encontrada' });
+
+    }
+
+
+  } else {
+    res.status(400).json({ message: 'error' })
+
+  }
+
+}
+
+)
 
 
 

@@ -8,8 +8,8 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const {addObject, cargarDatos,verInscriptos,agregarUsuario } = store;
-    return {addObject, cargarDatos,verInscriptos,agregarUsuario, estaLogeado };
+    const {eliminarObjeto,addObject, cargarDatos,verInscriptos,agregarUsuario } = store;
+    return {eliminarObjeto,addObject, cargarDatos,verInscriptos,agregarUsuario, estaLogeado };
   },
   data() {
     return {
@@ -53,6 +53,15 @@ export default {
     verInscriptos(clase) {
       this.$router.push("/admin/clases/"+clase)
     }
+    ,
+    async eliminar(id) {
+      console.log("Pasa primer metodo")
+      await this.eliminarObjeto("clases",id);
+      await this.loadData()
+      alert("Se eliminó correctamente la clase")
+      this.$router.push("/clases")
+    }
+    
 
   }
 }
@@ -78,7 +87,7 @@ export default {
           <ion-label>Anotados: {{ e.anotados }}</ion-label>
           <ion-button @click="verInscriptos(e.id)">Ver inscriptos</ion-button>
           <ion-button @click="agregarClase">Editar</ion-button>
-          <ion-button @click="agregarClase">Borrar</ion-button>
+          <ion-button @click="eliminar(e.id)">Borrar</ion-button>
         </ion-item>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">
