@@ -21,8 +21,8 @@ const users = [
   {email:'alumnoba@test.com',password:'1234','rol':'alumno',id: 3,plan:'basico'},
   {email:'alumnopla@test.com',password:'1234','rol':'alumno',id: 4,plan:'platino'},
   {email:'admin2@test.com',password:'1234','rol':'admin', id: 5},
-  {email:'profe@test.com',password:'1234','rol':'profe', id: 6}, 
-   {email:'profe2@test.com',password:'1234','rol':'profe',id : 7}
+  { email: 'profe@test.com', password: '1234', rol: 'profe', id: 6, nombre: 'Juan', apellido: 'Veron', dni: '12345678' },
+  { email: 'profe2@test.com', password: '1234', rol: 'profe', id: 7, nombre: 'Leo', apellido: 'Ponzio', dni: '87654321' }
 ]
 
 const clases = [
@@ -32,6 +32,7 @@ const clases = [
 ]
 
 const rutinas = [ {nombre:"Torso-Pierna" , nombreAlumno:"Pepe" , nivel:"Basico", id:1}]
+
 
 const usuariosInscriptos = []
 
@@ -380,6 +381,19 @@ app.put('/admin/clases/:id', (req, res) => {
   clases[claseIndex] = { ...clases[claseIndex], ...req.body };
 
   return res.status(200).json(clases[claseIndex]);
+});
+
+app.put('/admin/profesores/:id', (req, res) => {
+  const profesorId = parseInt(req.params.id);
+  const profesorIndex = users.findIndex(profesor => profesor.id === profesorId && profesor.rol === 'profe');
+
+  if (profesorIndex === -1) {
+    return res.status(404).json({ message: 'Profe no encontrado' });
+  }
+
+  users[profesorIndex] = { ...users[profesorIndex], ...req.body };
+
+  return res.status(200).json(users[profesorIndex]);
 });
 
 

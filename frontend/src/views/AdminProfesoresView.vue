@@ -8,15 +8,18 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const { eliminarObjeto,cargarDatos,agregarUsuario } = store;
-    return { eliminarObjeto,cargarDatos,agregarUsuario, estaLogeado };
+    const { eliminarObjeto,cargarDatos,agregarUsuario, editarProfesor } = store;
+    return { eliminarObjeto,cargarDatos,agregarUsuario, estaLogeado, editarProfesor };
   },
   data() {
     return {
       user: {rol: "profe"},
       lista:[],
       mostrarFormularioFlag: false, // Inicialmente oculto
-      showPassword: false
+      showPassword: false,
+      editMode: false, // Bandera para saber si estamos en modo de edición
+      editingProfessor: {}, // Almacena los datos del usuario que está siendo editado
+
     }
   },
   mounted() {
@@ -52,7 +55,36 @@ export default {
       await this.loadData()
       alert("Se eliminó correctamente el profe")
       this.$router.push("/profes")
+    },
+    editarProfesor(profesor) {
+      console.log("Profesor recibido para edición:", profesor);
+      this.editingProfessor = { ...profesor }; // Almacena una copia del usuario seleccionado para edición
+      console.log("Profesor recibido para edición:", this.editingProfessor);
+      this.profesor = { ...profesor }; // Rellena el formulario con los datos del usuario
+      this.editMode = true; // Activa el modo de edición
+      this.mostrarFormulario(); // Muestra el formulario flotante
+    },
+    cancelEdit() {
+      // Cerrar formulario y limpiar datos de edición
+      this.mostrarFormularioFlag = false; // Ocultar el formulario flotante
+      this.editingProfessor = {}; // Limpiar datos de edición
+      this.editMode = false; // Desactivar modo de edición
+
+    },
+    async updateProfesor() {
+      console.log(this.editingProfessor)
+      console.log(this.profesor)
+      await this.editarProfesor(this.editingProfessor.id, this.profesor);
+      
+      await this.loadData()
+      console.log("estoy aca")
+      alert("Se edito correctamente")
+      this.$router.push("/admin/profesores")
+      this.editingProfessor = {};
+      this.editMode = false;
+      this.mostrarFormulario();
     }
+    
 
   }
 }
@@ -68,27 +100,35 @@ export default {
       <!-- Lista de usuarios -->
       
       <ion-item v-for="e in lista" :key="e.id">
-          <ion-label>Email: {{ e.email }}</ion-label>
           <ion-label>
-            Password:
-            <span v-if="!e.showPassword">********</span>
-            <span v-else>{{ e.password }}</span>
+              Nombre y Apellido: {{ e.nombre }} {{ e.apellido }}
+            </ion-label>
+            <ion-label>
+              DNI: {{ e.dni }}
+            </ion-label>
+            <ion-label>
+              Email: {{ e.email }}
+            </ion-label>
+            <ion-label>
+              Password:
+              <span v-if="!e.showPassword">********</span>
+              <span v-else>{{ e.password }}</span>
           </ion-label>
-          <ion-button @click="agregarClase">Editar</ion-button>
+          <ion-button @click="editarProfesor(e)">Editar</ion-button>
           <ion-button @click="eliminar(e.id)">Borrar</ion-button>
           <ion-button @click="mostrarContraseña(e)">Mostrar/Ocultar Contraseña</ion-button>
       
         </ion-item>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">
-          <button @click="mostrarFormulario" class="close-button">X</button>
-          <div class="login-text">Agregar profesor</div>
+          <button @click="cancelEdit" class="close-button">X</button>
+          <div class="login-text">{{ editMode ? 'Editar profesor' : 'Agregar profesor' }}</div>
           <ion-input class="input" v-model="user.nombre" placeholder="Nombre" type="text" required></ion-input>
           <ion-input class="input" v-model="user.apellido" placeholder="Apellido" type="text" required></ion-input>
           <ion-input class="input" v-model="user.dni" placeholder="DNI" type="text" required></ion-input>
           <ion-input class="input" v-model="user.email" placeholder="E-mail" type="email" required></ion-input>
           <ion-input class="input" v-model="user.password" placeholder="Contraseña" type="password" required></ion-input>
-          <ion-button @click="addUser">Agregar</ion-button>
+          <ion-button @click="editMode ? updateProfesor() : addUser()">{{ editMode ? 'Guardar cambios' : 'Agregar' }}</ion-button>
         </div>
     </ion-content>
   </ion-page>

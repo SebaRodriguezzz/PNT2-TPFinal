@@ -90,6 +90,15 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
+        async editarProfesor(id, profesor) {
+            try {
+            console.log("editando profesor")
+            const datos = await axios.put("http://localhost:3000/admin/profesores/"+id, profesor);
+            console.log(" profesor editado - user store")
+            } catch (e) {
+                console.log(e);
+            }
+        },
         async cargarDatos(objetos) {
             try {
             const response = await axios.get("http://localhost:3000/"+objetos);
