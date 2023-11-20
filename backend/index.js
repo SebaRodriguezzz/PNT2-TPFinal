@@ -116,7 +116,7 @@ app.post('/clases/agregar',(req,res) =>{
   console.log(req.body);
   if(req.body) {
     const clase = req.body;
-    clase.id = String(parseInt(clases[clases.length - 1]?.id || 0) + 1) // ?. optional chaining
+    clase.id = parseInt(clases[clases.length - 1]?.id || 0) + 1 // ?. optional chaining
     clases.push(clase)
     res.status(200).json({message:'bien'})
   } else {
@@ -369,6 +369,18 @@ app.put('/rutinas/:id', (req, res) => {
   return res.status(200).json(rutinas[rutinaIndex]);
 });
 
+app.put('/admin/clases/:id', (req, res) => {
+  const claseId = parseInt(req.params.id);
+  const claseIndex = clases.findIndex(clase => clase.id === claseId);
+
+  if (claseIndex === -1) {
+    return res.status(404).json({ message: 'Clase no encontrada' });
+  }
+
+  clases[claseIndex] = { ...clases[claseIndex], ...req.body };
+
+  return res.status(200).json(clases[claseIndex]);
+});
 
 
 const PORT = 3000

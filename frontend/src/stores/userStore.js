@@ -81,6 +81,15 @@ export const loginStore = defineStore('login', {
                 console.log(e);
             }
         },
+        async editarClase(id, clase) {
+            try {
+            console.log("editando clase")
+            const datos = await axios.put("http://localhost:3000/admin/clases/"+id, clase);
+            console.log(" clase editada - user store")
+            } catch (e) {
+                console.log(e);
+            }
+        },
         async cargarDatos(objetos) {
             try {
             const response = await axios.get("http://localhost:3000/"+objetos);

@@ -8,17 +8,20 @@ export default {
   setup() {
     const store = loginStore();
     const { estaLogeado } = storeToRefs(store);
-    const {eliminarObjeto,addObject, cargarDatos,verInscriptos,agregarUsuario } = store;
-    return {eliminarObjeto,addObject, cargarDatos,verInscriptos,agregarUsuario, estaLogeado };
+    const {eliminarObjeto,addObject, cargarDatos,verInscriptos,agregarUsuario, editarClase } = store;
+    return {eliminarObjeto,addObject, cargarDatos,verInscriptos,agregarUsuario, estaLogeado, editarClase };
   },
   data() {
     return {
       user: {rol : "alumno"},
       lista: [],
       clase: {},
-      profes:[],
+      profes:[{id: 1, nombre: "Nahuel"},{id: 2, nombre: "Tomas"}, {id: 3, nombre: "Sofía"}, {id: 4, nombre: "Ricardo"}],
       mostrarFormularioFlag: false, // Inicialmente oculto
-      showPassword: false
+      showPassword: false,
+      editMode: false, // Bandera para saber si estamos en modo de edición
+      editingClass: {}, // Almacena los datos del usuario que está siendo editado
+
     }
   },
   mounted() {
@@ -59,9 +62,35 @@ export default {
       await this.eliminarObjeto("clases",id);
       await this.loadData()
       alert("Se eliminó correctamente la clase")
-      this.$router.push("/clases")
+      this.$router.push("/admin/clases")
+    },
+    editarClase(clase) {
+      console.log("Clase recibida para edición:", clase);
+      this.editingClass = { ...clase }; // Almacena una copia del usuario seleccionado para edición
+      console.log("Clase recibida para edición:", this.editingClass);
+      this.clase = { ...clase }; // Rellena el formulario con los datos del usuario
+      this.editMode = true; // Activa el modo de edición
+      this.mostrarFormulario(); // Muestra el formulario flotante
+    },
+    cancelEdit() {
+      // Cerrar formulario y limpiar datos de edición
+      this.mostrarFormularioFlag = false; // Ocultar el formulario flotante
+      this.editingClass = {}; // Limpiar datos de edición
+      this.editMode = false; // Desactivar modo de edición
+
+    },
+    async updateClase() {
+      console.log(this.editingClass)
+      console.log(this.clase)
+      await this.editarClase(this.editingClass.id, this.clase);
+      
+      await this.loadData()
+      alert("Se edito correctamente")
+      this.$router.push("/admin/clases")
+      this.editingClass = {};
+      this.editMode = false;
+      this.mostrarFormulario();
     }
-    
 
   }
 }
@@ -86,13 +115,13 @@ export default {
           <ion-label>Capacidad: {{ e.capacidad }}</ion-label>
           <ion-label>Anotados: {{ e.anotados }}</ion-label>
           <ion-button @click="verInscriptos(e.id)">Ver inscriptos</ion-button>
-          <ion-button @click="agregarClase">Editar</ion-button>
+          <ion-button @click="editarClase(e)">Editar</ion-button>
           <ion-button @click="eliminar(e.id)">Borrar</ion-button>
         </ion-item>
       <!-- Formulario flotante -->
       <div class="floating-form" v-if="mostrarFormularioFlag">
-        <button @click="mostrarFormulario" class="close-button">X</button>
-        <div class="login-text">Agregar clase</div>
+        <button @click="cancelEdit" class="close-button">X</button>
+        <div class="login-text">{{ editMode ? 'Editar clase' : 'Agregar clase' }}</div>
         <ion-input class="input" v-model="clase.nombre" placeholder="Nombre de actividad/clase" type="text" required></ion-input>
 
         <ion-select class="input custom-select" v-model="clase.nombreProfe" placeholder="Selecciona profe" required>
@@ -100,13 +129,11 @@ export default {
           <ion-select-option :value="e.nombre"> {{ e.nombre }} </ion-select-option>
         </ion-item>
 
-         
-        
         </ion-select>
         <ion-input class="input" v-model="clase.limitePersonas" placeholder="Limite de gente" type="text" required></ion-input>
         <ion-input class="input" v-model="clase.horario" placeholder="Horario de inicio" type="number" required></ion-input>
         <ion-input class="input" v-model="clase.duracion" placeholder="Duracion" type="password" required></ion-input>
-        <ion-button @click="agregarClase">Agregar</ion-button>
+        <ion-button @click="editMode ? updateClase() : agregarClase()">{{ editMode ? 'Guardar cambios' : 'Agregar' }}</ion-button>
       </div>
       <br>
 
