@@ -9,8 +9,8 @@ export default {
   setup() {
     const store = loginStore();
     const { usuario } = storeToRefs(store);
-    const { modificarEmail } = store;
-    return {modificarEmail, usuario };
+    const { modificarPerfil } = store;
+    return {modificarPerfil, usuario };
   },
   data(){
     return{
@@ -20,10 +20,9 @@ export default {
   
   },
   methods: {
-    async modificarEmail() {
-      await this.modificarEmail(this.user);
+    async modificarPerfil() {
+      await this.modificarPerfil(this.user, nuevoDato, esEmail);
     },
-
     formModificarEmail() {
       if (this.mostrarFlagModifContra) {
         this.mostrarFlagModifContra = false;
@@ -40,6 +39,10 @@ export default {
       }
     },
 
+    async modificarPerfilLocal(esEmail) {
+        const nuevoDato = esEmail ? usuario.nuevoEmail : usuario.nuevoDato;
+        await this.modificarPerfil(usuario, nuevoDato, esEmail);
+    }
   }
 }
 </script>
@@ -65,8 +68,7 @@ export default {
           <div class="login-text">Modificar email</div>
           <ion-input class="input" placeholder="Ingrese email actual" type="email"></ion-input>
           <ion-input class="input" v-model="usuario.nuevoEmail" placeholder="Ingrese nuevo email" type="email"></ion-input>
-          <ion-button @click="modificarEmail">Agregar</ion-button>
-
+          <ion-button @click="() => modificarPerfilLocal(true)">Modificar</ion-button>
         </div>
       </div>
 
@@ -75,7 +77,8 @@ export default {
         <div >
           <div class="login-text">Modificar contraseña</div>
           <ion-input class="input" placeholder="Ingrese contraseña actual" type="password"></ion-input>
-          <ion-input class="input" v-model="usuario.nuevaContra" placeholder="Ingrese nueva contraseña" type="password"></ion-input>
+          <ion-input class="input" v-model="usuario.nuevoDato" placeholder="Ingrese nueva contraseña" type="password"></ion-input>
+          <ion-button @click="() => modificarPerfilLocal(false)">Modificar</ion-button>
         </div>
       </div>
 

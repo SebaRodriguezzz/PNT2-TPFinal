@@ -139,6 +139,18 @@ export const loginStore = defineStore('login', {
 
 
         },
+        async modificarPerfil(usuario, nuevoDato, esEmail) {
+            console.log("Se envia al backend la modificación de usuario: " + usuario.id)
+            console.log("El nuevo mail/pass: " + nuevoDato)
+            console.log("es Email: " + esEmail)
+            const data = {
+                id: usuario.id,  // Asumiendo que tu usuario tiene un campo "id"
+                nuevoDato,
+                esEmail
+              };
+            const datos = axios.put("http://localhost:3000/perfil/"+ usuario.id , data)
+
+        }
 
         
 
