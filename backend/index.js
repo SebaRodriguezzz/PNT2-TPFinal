@@ -26,9 +26,9 @@ const users = [
 ]
 
 const clases = [
-  {nombre:'Salsa',nombreProfe:'Claudio', horario: 1600, capacidad: 20, anotados:0, id:1},
-  {nombre:'Bachata',nombreProfe:'Pepito', horario: 1700,capacidad: 20, anotados:0, id:2},
-  {nombre:'Tango',nombreProfe:'Juan', horario: 1500,capacidad: 5, anotados:0, id:3}
+  {nombre:'Salsa',nombreProfe:'Claudio', horario: 1600, capacidad: 20, anotados:0, duracion:30, id:1},
+  {nombre:'Bachata',nombreProfe:'Pepito', horario: 1700,capacidad: 20, anotados:0, duracion:60, id:2},
+  {nombre:'Tango',nombreProfe:'Juan', horario: 1500,capacidad: 5, anotados:0, duracion:45, id:3}
 ]
 
 const rutinas = [ {nombre:"Torso-Pierna" , nombreAlumno:"Pepe" , nivel:"Basico", id:1}]

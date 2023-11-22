@@ -16,7 +16,7 @@ export default {
       user: {rol : "alumno"},
       lista: [],
       clase: {},
-      profes:[{id: 1, nombre: "Nahuel"},{id: 2, nombre: "Tomas"}, {id: 3, nombre: "Sofía"}, {id: 4, nombre: "Ricardo"}],
+      profes:[],
       mostrarFormularioFlag: false, // Inicialmente oculto
       showPassword: false,
       editMode: false, // Bandera para saber si estamos en modo de edición
@@ -112,8 +112,9 @@ export default {
           <ion-label>Nombre clase: {{ e.nombre }}</ion-label>
           <ion-label>Nombre profe: {{ e.nombreProfe }}</ion-label>
           <ion-label>Horario: {{ e.horario }}</ion-label>
-          <ion-label>Capacidad: {{ e.capacidad }}</ion-label>
+          <ion-label>Capacidad: {{ e.limitePersonas }}</ion-label>
           <ion-label>Anotados: {{ e.anotados }}</ion-label>
+          <ion-label>Duracion: {{ e.duracion }}</ion-label>
           <ion-button @click="verInscriptos(e.id)">Ver inscriptos</ion-button>
           <ion-button @click="editarClase(e)">Editar</ion-button>
           <ion-button @click="eliminar(e.id)">Borrar</ion-button>
@@ -123,16 +124,11 @@ export default {
         <button @click="cancelEdit" class="close-button">X</button>
         <div class="login-text">{{ editMode ? 'Editar clase' : 'Agregar clase' }}</div>
         <ion-input class="input" v-model="clase.nombre" placeholder="Nombre de actividad/clase" type="text" required></ion-input>
-
-        <ion-select class="input custom-select" v-model="clase.nombreProfe" placeholder="Selecciona profe" required>
-        <ion-item v-for="e in profes" :key="e.id">
-          <ion-select-option :value="e.nombre"> {{ e.nombre }} </ion-select-option>
-        </ion-item>
-
-        </ion-select>
+        <ion-input class="input" v-model="clase.nombreProfe" placeholder="Profesor" type="text" required></ion-input>
         <ion-input class="input" v-model="clase.limitePersonas" placeholder="Limite de gente" type="text" required></ion-input>
         <ion-input class="input" v-model="clase.horario" placeholder="Horario de inicio" type="number" required></ion-input>
-        <ion-input class="input" v-model="clase.duracion" placeholder="Duracion" type="password" required></ion-input>
+        <ion-input class="input" v-model="clase.duracion" placeholder="Duracion" type="number" required></ion-input>
+        <ion-input class="input" v-model="clase.anotados" placeholder="Anotados" type="number"></ion-input>
         <ion-button @click="editMode ? updateClase() : agregarClase()">{{ editMode ? 'Guardar cambios' : 'Agregar' }}</ion-button>
       </div>
       <br>
