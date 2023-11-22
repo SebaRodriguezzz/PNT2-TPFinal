@@ -22,6 +22,8 @@ export default {
   methods: {
     async modificarPerfil() {
       await this.modificarPerfil(this.usuario, nuevoDato, esEmail);
+      alert("Se modificó correctamente el perfil")
+      this.$router.push("/perfil")
     },
     formModificarEmail() {
       if (this.mostrarFlagModifContra) {
@@ -42,6 +44,14 @@ export default {
     async modificarPerfilLocal(esEmail) {
         const nuevoDato = esEmail ? this.usuario.nuevoEmail : this.usuario.nuevoDato;
         await this.modificarPerfil(this.usuario, nuevoDato, esEmail);
+        if (esEmail){
+          this.formModificarEmail()
+        } else {
+          this.formModificarContra()
+        }
+        
+        alert("Se modificó correctamente el perfil")
+        this.$router.push("/perfil")
     }
   }
 }

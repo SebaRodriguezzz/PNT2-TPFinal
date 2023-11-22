@@ -396,6 +396,24 @@ app.put('/admin/profesores/:id', (req, res) => {
   return res.status(200).json(users[profesorIndex]);
 });
 
+app.put('/perfil/:id', (req, res) => {
+  const userId = parseInt(req.params.id);
+  const { nuevoDato, esEmail } = req.body;
+
+  const userToUpdate = users.find(user => user.id === userId);
+  if (!userToUpdate) {
+    return res.status(404).json({ error: 'Usuario no encontrado' });
+  }
+
+  if (esEmail) {
+    userToUpdate.email = nuevoDato;
+  } else {
+    userToUpdate.password = nuevoDato;
+  }
+
+  return res.status(200).json({ message: 'Perfil actualizado exitosamente', user: userToUpdate });
+});
+
 
 const PORT = 3000
 const server = app.listen(PORT, () => console.log(`Servidor express escuchando en http://localhost:${PORT}`))
