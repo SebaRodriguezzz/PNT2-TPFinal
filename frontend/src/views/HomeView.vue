@@ -47,7 +47,7 @@ export default {
         <ion-col size="12">
           <h1>Bienvenido al Gimnasio Fitness</h1>
           <h1>Bienvenido al gimnasio PNT2</h1>
-          <h2>Cantidad de alumnos en el gym </h2> {{ this.gym.cantidadAhora }}
+         <!--  <h2>Cantidad de alumnos en el gym </h2> {{ this.gym.cantidadAhora }}
           <div v-if="estaLogeado && esAdmin">
             <h1> Agregar limite del gym</h1>
           <ion-input class="input" v-model="gym.limite" placeholder="Limite de personas" type="number"></ion-input>
@@ -59,7 +59,7 @@ export default {
             <ion-button @click="agregarCantidad">Estoy en el gym</ion-button>
             <ion-button @click="disminuirCantidad">Me fui del gym</ion-button>
           </div>
-          
+           -->
          
         </ion-col>
       </ion-row>

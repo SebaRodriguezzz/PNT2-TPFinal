@@ -7,12 +7,8 @@ export default {
   components: {IonPage,IonContent,IonInput,IonButton},
   setup() {
     const store = loginStore(); //obligatorio
-   //Esto para state
     const { estaLogeado } = storeToRefs(store);
-
-    //Esto para metodo
     const { login } = store;
-
     return { login, estaLogeado };
   },
   data() {
