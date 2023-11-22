@@ -60,7 +60,7 @@ export default {
       console.log("Profesor recibido para edición:", profesor);
       this.editingProfessor = { ...profesor }; // Almacena una copia del usuario seleccionado para edición
       console.log("Profesor recibido para edición:", this.editingProfessor);
-      this.profesor = { ...profesor }; // Rellena el formulario con los datos del usuario
+      this.user = { ...profesor }; // Rellena el formulario con los datos del usuario
       this.editMode = true; // Activa el modo de edición
       this.mostrarFormulario(); // Muestra el formulario flotante
     },
@@ -73,8 +73,8 @@ export default {
     },
     async updateProfesor() {
       console.log(this.editingProfessor)
-      console.log(this.profesor)
-      await this.editarProfesor(this.editingProfessor.id, this.profesor);
+      console.log(this.user)
+      await this.editarProfesor(this.editingProfessor.id, this.user);
       
       await this.loadData()
       console.log("estoy aca")
